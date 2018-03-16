@@ -47,9 +47,13 @@ public class ClientWebService {
 			
 			bank.retrieveSavings("", "Mueller", fname, lname, street, zipTown, interestrate, accountnumber, accountstatus);
 			
-			System.out.println("FNAME: "+fname.value);
-			System.out.println("NNAME: "+lname.value);
+			System.out.println("First Name: "+fname.value);
+			System.out.println("Last Name: "+lname.value);
+			System.out.println("Street: "+street.value);
+			System.out.println("ZIPTown: "+zipTown.value);
+			System.out.println("InterestRate: "+interestrate.value);
 			System.out.println("Account Number: "+accountnumber.value);
+			System.out.println("Account Status: "+accountstatus.value);
 			
 			String [] array = bank.listSavingsLastname();
 			System.out.println("Savings" + Arrays.toString(array));
