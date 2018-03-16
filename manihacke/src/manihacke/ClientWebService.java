@@ -1,6 +1,7 @@
 package manihacke;
 
 import java.rmi.RemoteException;
+import java.util.Arrays;
 
 import javax.xml.rpc.holders.FloatWrapperHolder;
 import javax.xml.rpc.holders.LongWrapperHolder;
@@ -11,6 +12,9 @@ import ch.fhnw.www.wi.eai.bankjd.BankJDProxy;
 
 public class ClientWebService {
 
+	/**
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 	BankJD bank;
@@ -41,11 +45,19 @@ public class ClientWebService {
 			
 			
 			
-			
 			bank.retrieveSavings("", "Mueller", fname, lname, street, zipTown, interestrate, accountnumber, accountstatus);
 			
 			System.out.println("FNAME: "+fname.value);
 			System.out.println("NNAME: "+lname.value);
+			System.out.println("Account Number: "+accountnumber.value);
+			
+			String [] array = bank.listSavingsLastname();
+			System.out.println("Savings" + Arrays.toString(array));
+			
+			String [] array2 = bank.listeTransactionLastname();
+			System.out.println("Transaction" + Arrays.toString(array2));
+			
+			
 			
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
