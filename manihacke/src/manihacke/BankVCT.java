@@ -42,20 +42,7 @@ public static void main(String[] args) throws SQLException, InstantiationExcepti
 				String Clearing = rs.getString("Clearing");
 				System.out.println("\t" + CustomerID + "\t" + CustomerName + "\t" + StreetName + "\t" + ZIP + "\t" + Town + "\t" + Country + "\t" + TypeOfCustomer + "\t" + AccountNumber + "\t" + Total + "\t" + Clearing);
 			}
-			
-		//Target DB
-		String url_target = "jdbc:mysql://sql11.freesqldatabase.com:3306/";
-		String dbName_target = "sql11226982";
 
-		String driver_target = "com.mysql.jdbc.Driver";
-		String userName_target = "sql11226982"; 
-		String password_target = "4IltbjKGGQ";
-		
-		Class.forName(driver_target).newInstance();
-	    Connection conn_target = DriverManager.getConnection(url_target+dbName_target,userName_target,password_target);
-	    if(conn_target!=null){
-	    	System.out.println("check!");
-	    }
 		
 
 	}
