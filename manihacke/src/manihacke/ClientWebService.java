@@ -27,39 +27,35 @@ public class ClientWebService {
 			bank.printSavings();
 			//das für alle klassen gem BankJD.java Klasse
 			
-			StringHolder fname;
-			StringHolder lname;
-			StringHolder street;
-			StringHolder zipTown;
-			FloatWrapperHolder interestrate;
-			LongWrapperHolder accountnumber;
-			LongWrapperHolder accountstatus;
-			
-			fname = new StringHolder();
-			lname = new StringHolder();
-			street = new StringHolder();
-			zipTown = new StringHolder();
-			interestrate = new FloatWrapperHolder();
-			accountnumber = new LongWrapperHolder();
-			accountstatus = new LongWrapperHolder();
+			StringHolder fname = new StringHolder();
+			StringHolder lname = new StringHolder();
+			StringHolder street = new StringHolder();
+			StringHolder zipTown = new StringHolder();
+			FloatWrapperHolder interestrate = new FloatWrapperHolder();
+			LongWrapperHolder accountnumber = new LongWrapperHolder();
+			LongWrapperHolder accountstatus = new LongWrapperHolder();	
 			
 			
-			
-			bank.retrieveSavings("", "Mueller", fname, lname, street, zipTown, interestrate, accountnumber, accountstatus);
-			
-			System.out.println("First Name: "+fname.value);
-			System.out.println("Last Name: "+lname.value);
-			System.out.println("Street: "+street.value);
-			System.out.println("ZIPTown: "+zipTown.value);
-			System.out.println("InterestRate: "+interestrate.value);
-			System.out.println("Account Number: "+accountnumber.value);
-			System.out.println("Account Status: "+accountstatus.value);
+			String [] array1 = bank.listSavingsLastname();
+			for(int i = 0; i < array1.length;i++) {
+				String name = array1[i];
+				bank.retrieveSavings("", name, fname, lname, street, zipTown, interestrate, accountnumber, accountstatus);
+				System.out.println("--------------------------------------");
+				System.out.println("Person " + (i+1) + ":");
+				System.out.println("First Name: "+fname.value);
+				System.out.println("Last Name: "+lname.value);
+				System.out.println("Street: "+street.value);
+				System.out.println("ZIPTown: "+zipTown.value);
+				System.out.println("InterestRate: "+interestrate.value);
+				System.out.println("Account Number: "+accountnumber.value);
+				System.out.println("Account Status: "+accountstatus.value);
+			}
 			
 			String [] array = bank.listSavingsLastname();
-			System.out.println("Savings" + Arrays.toString(array));
+			//System.out.println("Savings" + Arrays.toString(array));
 			
 			String [] array2 = bank.listeTransactionLastname();
-			System.out.println("Transaction" + Arrays.toString(array2));
+			//System.out.println("Transaction" + Arrays.toString(array2));
 			
 			
 			
