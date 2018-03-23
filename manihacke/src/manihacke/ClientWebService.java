@@ -72,7 +72,7 @@ public class ClientWebService {
 			FloatWrapperHolder transactionAccountStatus = new FloatWrapperHolder();
 			StringHolder transactionBic = new StringHolder();
 			
-			//print transactions
+			//print transactions & insert in DB
 			String [] array2 = bank.listeTransactionLastname();
 			for(int i = 0; i < array2.length;i++) {
 				String name = array2[i];
@@ -83,6 +83,12 @@ public class ClientWebService {
 				System.out.println(account);
 				try {
 					DAO.insertCustomer(customer);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				try {
+					DAO.insertAccount(account);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

@@ -34,7 +34,9 @@ public static void main(String[] args) throws SQLException, InstantiationExcepti
 				// create new customer object and insert into database
 				TargetCustomer customer = new TargetCustomer(Integer.parseInt(rs.getString("CustomerID")), rs.getString("CustomerName"), rs.getString("CustomerName"), rs.getString("Town"), rs.getString("Country"), 1);
 				DAO.insertCustomer(customer);
-				//
+				//create new account object and insert into database
+				TargetAccount account = new TargetAccount(Integer.parseInt(rs.getString("CustomerID")),rs.getString("AccountNumber"), Double.parseDouble(rs.getString("Total")),"Type?");
+				DAO.insertAccount(account);
 				
 				String CustomerID = rs.getString("CustomerID");
 				String CustomerName = rs.getString("CustomerName");

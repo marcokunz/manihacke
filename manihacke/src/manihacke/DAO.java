@@ -73,6 +73,33 @@ public class DAO {
 	}
 	
 	
+	//account table mit account objekt befüllen
+	public static boolean insertAccount(TargetAccount account) throws SQLException {
+	   Connection conn = DriverManager.getConnection(url+dbName,userName,password);
+
+	   
+	    try {
+	        PreparedStatement ps = conn.prepareStatement("INSERT INTO account (CID, IBAN, ACCOUNTBALANCE, TYPEOFACCOUNT) VALUES (?, ?, ?, ?)");
+	        ps.setInt(1, account.getCID());
+	        ps.setString(2,account.getIBAN());
+	        ps.setDouble(3,account.getAccountBalance());
+	        ps.setString(4, account.getTypeOfAccount());
+	        
+
+	        int i = ps.executeUpdate();
+	      
+	        if(i == 1) {
+	        return true;
+	      }
+	        
+	    } 
+	    
+	    catch (SQLException ex) {
+	        ex.printStackTrace();
+	    }
+	    return false;
+	}
+	
 	
 	
 		
