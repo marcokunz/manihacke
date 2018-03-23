@@ -3,14 +3,14 @@ package manihacke;
 public class TargetAccount {
 	
 	private int CID;
-	private int IBAN;
+	private String IBAN;
 	private double accountBalance;
 	private String typeOfAccount;
 	
 	
 	
 
-	public TargetAccount(int CID, int IBAN, double accountBalance, String typeOfAccount) {
+	public TargetAccount(int CID, String IBAN, double accountBalance, String typeOfAccount) {
 		this.CID = CID;
 		this.IBAN = IBAN;
 		this.accountBalance = accountBalance;
@@ -34,14 +34,14 @@ public class TargetAccount {
 
 
 
-	public int getIBAN() {
+	public String getIBAN() {
 		return IBAN;
 	}
 
 
 
 
-	public void setIBAN(int iBAN) {
+	public void setIBAN(String iBAN) {
 		IBAN = iBAN;
 	}
 
@@ -85,9 +85,5 @@ public class TargetAccount {
 
 
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
 
 }

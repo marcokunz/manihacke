@@ -1,7 +1,7 @@
 package manihacke;
 
 import java.rmi.RemoteException;
-import java.util.Arrays;
+import java.sql.SQLException;
 
 import javax.xml.rpc.holders.FloatWrapperHolder;
 import javax.xml.rpc.holders.IntegerWrapperHolder;
@@ -12,6 +12,7 @@ import ch.fhnw.www.wi.eai.bankjd.BankJD;
 import ch.fhnw.www.wi.eai.bankjd.BankJDProxy;
 
 public class ClientWebService {
+	
 
 	/**
 	 * @param args
@@ -70,18 +71,23 @@ public class ClientWebService {
 			for(int i = 0; i < array2.length;i++) {
 				String name = array2[i];
 				bank.retrieveTransaction("", name, transactionFirstName, transactionLastName, transactionAddress, transactionCountry, transactionRanking, transactionIbanNumber, transactionAccountStatus, transactionBic );
-				System.out.println("--------------------------------------");
-				System.out.println("Person " + (i+1) + ":");
-				System.out.println("First Name: "+transactionFirstName.value);
-				System.out.println("Last Name: "+transactionLastName.value);
-				System.out.println("Address: "+transactionAddress.value);
-				System.out.println("Country: "+transactionCountry.value);
-				System.out.println("Ranking: "+transactionRanking.value);
-				System.out.println("IBAN Number: "+transactionIbanNumber.value);
-				System.out.println("Account Status: "+transactionAccountStatus.value);
-				System.out.println("Account bic: "+transactionBic.value);
+				TargetCustomer customer = new TargetCustomer(0, transactionFirstName.value, transactionLastName.value, transactionAddress.value, transactionCountry.value, 1);
+				TargetAccount account = new TargetAccount(0, transactionIbanNumber.value, transactionAccountStatus.value, "Transaction");
+				System.out.println(transactionRanking.value);
+				System.out.println(customer);
+				System.out.println(account);
+				try {
+					DAO.insertCustomer(customer);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 			}
 			
+		
+			
+		
 		
 			
 			

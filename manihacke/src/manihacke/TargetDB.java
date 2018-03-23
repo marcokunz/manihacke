@@ -40,7 +40,6 @@ public class TargetDB {
 	
     //Account Table
     String deleteTableAccount = "DROP TABLE Account";
-    
     String createTableAccount = "CREATE TABLE Account" + 
     		"(" + 
     		"CID VARCHAR(100)," + 

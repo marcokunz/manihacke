@@ -7,9 +7,9 @@ public class TargetCustomer {
 	private String lastName;
 	private String address;
 	private String countryCode;
-	private int status;
+	private float status;
 
-	public TargetCustomer(int CID, String firstName, String lastName, String address, String countryCode, int status){
+	public TargetCustomer(int CID, String firstName, String lastName, String address, String countryCode, float status){
 		this.CID = CID;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -60,11 +60,11 @@ public class TargetCustomer {
 		this.countryCode = countryCode;
 	}
 
-	public int getStatus() {
+	public float getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(float status) {
 		this.status = status;
 	}
 	
@@ -76,14 +76,6 @@ public class TargetCustomer {
 
 
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-		TargetCustomer customer1 = new TargetCustomer(5, "marco", "kunz", "Riggenbachstr. 4 Olten", "CH", 1);
-		System.out.println(customer1);
-		System.out.println(customer1.getAddress());
-		
-
-	}
+	
 
 }
