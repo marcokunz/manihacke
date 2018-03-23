@@ -30,6 +30,12 @@ public static void main(String[] args) throws SQLException, InstantiationExcepti
 		    rs = stmt.executeQuery("SELECT * FROM Account");
 		    System.out.println("CustomerID\tCustomerName\tStreetName\tZIP\tTown\tCountry\tTypeOfCustomer\tAccountNumber\tTotal\tClearing");
 			while (rs.next()) {
+				
+				// create new customer object and insert into database
+				TargetCustomer customer = new TargetCustomer(Integer.parseInt(rs.getString("CustomerID")), rs.getString("CustomerName"), rs.getString("CustomerName"), rs.getString("Town"), rs.getString("Country"), 1);
+				DAO.insertCustomer(customer);
+				//
+				
 				String CustomerID = rs.getString("CustomerID");
 				String CustomerName = rs.getString("CustomerName");
 				String StreetName = rs.getString("StreetName");

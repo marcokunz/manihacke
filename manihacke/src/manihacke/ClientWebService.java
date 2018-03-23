@@ -56,6 +56,12 @@ public class ClientWebService {
 			System.out.println();
 			System.out.println("TRANSACTIONS TRANSACTIONS TRANSACTIONS TRANSACTIONS TRANSACTIONS");
 			
+			
+			
+			
+			
+			
+			
 			//Transactions
 			StringHolder transactionFirstName = new StringHolder();
 			StringHolder transactionLastName = new StringHolder();
@@ -73,7 +79,6 @@ public class ClientWebService {
 				bank.retrieveTransaction("", name, transactionFirstName, transactionLastName, transactionAddress, transactionCountry, transactionRanking, transactionIbanNumber, transactionAccountStatus, transactionBic );
 				TargetCustomer customer = new TargetCustomer(0, transactionFirstName.value, transactionLastName.value, transactionAddress.value, transactionCountry.value, 1);
 				TargetAccount account = new TargetAccount(0, transactionIbanNumber.value, transactionAccountStatus.value, "Transaction");
-				System.out.println(transactionRanking.value);
 				System.out.println(customer);
 				System.out.println(account);
 				try {
@@ -82,6 +87,7 @@ public class ClientWebService {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
 				
 			}
 			

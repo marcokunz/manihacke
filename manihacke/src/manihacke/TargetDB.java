@@ -12,11 +12,11 @@ public class TargetDB {
 		
 	//Target DB
 	String url = "jdbc:mysql://sql11.freesqldatabase.com:3306/";
-	String dbName = "sql11226982";
+	String dbName = "sql11228437";
 
 	String driver = "com.mysql.jdbc.Driver";
-	String userName = "sql11226982"; 
-	String password = "4IltbjKGGQ";
+	String userName = "sql11228437"; 
+	String password = "YGfgE5q4J9";
 
 	
 	Class.forName(driver).newInstance();
