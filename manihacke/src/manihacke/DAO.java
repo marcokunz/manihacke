@@ -100,6 +100,28 @@ public class DAO {
 	    return false;
 	}
 	
+	//Inhalte des account tables löschen (struktur bleibt bestehen)
+	public static boolean emptyAccountTable() throws SQLException{
+		Connection conn = DriverManager.getConnection(url+dbName,userName,password);
+
+		   
+	    try { PreparedStatement ps = conn.prepareStatement("TRUNCATE TABLE account");
+	      
+
+	        int i = ps.executeUpdate();
+	      
+	        if(i == 1) {
+	        return true;
+	      }
+	        
+	    } 
+	    
+	    catch (SQLException ex) {
+	        ex.printStackTrace();
+	    }
+	    return false;
+		
+	}
 	
 	
 		
