@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.util.Arrays;
 
 import javax.xml.rpc.holders.FloatWrapperHolder;
+import javax.xml.rpc.holders.IntegerWrapperHolder;
 import javax.xml.rpc.holders.LongWrapperHolder;
 import javax.xml.rpc.holders.StringHolder;
 
@@ -24,18 +25,17 @@ public class ClientWebService {
 		try {
 			
 			
-			bank.printSavings();
-			//das für alle klassen gem BankJD.java Klasse
-			
+			//Savings
 			StringHolder fname = new StringHolder();
 			StringHolder lname = new StringHolder();
 			StringHolder street = new StringHolder();
 			StringHolder zipTown = new StringHolder();
 			FloatWrapperHolder interestrate = new FloatWrapperHolder();
 			LongWrapperHolder accountnumber = new LongWrapperHolder();
-			LongWrapperHolder accountstatus = new LongWrapperHolder();	
+			LongWrapperHolder accountstatus = new LongWrapperHolder();
 			
-			
+			System.out.println("SAVINGS SAVINGS SAVINGS SAVINGS SAVINGS");
+			//print Savings
 			String [] array1 = bank.listSavingsLastname();
 			for(int i = 0; i < array1.length;i++) {
 				String name = array1[i];
@@ -51,11 +51,38 @@ public class ClientWebService {
 				System.out.println("Account Status: "+accountstatus.value);
 			}
 			
-			String [] array = bank.listSavingsLastname();
-			//System.out.println("Savings" + Arrays.toString(array));
+			System.out.println();
+			System.out.println();
+			System.out.println("TRANSACTIONS TRANSACTIONS TRANSACTIONS TRANSACTIONS TRANSACTIONS");
 			
+			//Transactions
+			StringHolder transactionFirstName = new StringHolder();
+			StringHolder transactionLastName = new StringHolder();
+			StringHolder transactionAddress = new StringHolder();
+			StringHolder transactionCountry = new StringHolder();
+			IntegerWrapperHolder transactionRanking = new IntegerWrapperHolder();
+			StringHolder transactionIbanNumber = new StringHolder();
+			FloatWrapperHolder transactionAccountStatus = new FloatWrapperHolder();
+			StringHolder transactionBic = new StringHolder();
+			
+			//print transactions
 			String [] array2 = bank.listeTransactionLastname();
-			//System.out.println("Transaction" + Arrays.toString(array2));
+			for(int i = 0; i < array2.length;i++) {
+				String name = array2[i];
+				bank.retrieveTransaction("", name, transactionFirstName, transactionLastName, transactionAddress, transactionCountry, transactionRanking, transactionIbanNumber, transactionAccountStatus, transactionBic );
+				System.out.println("--------------------------------------");
+				System.out.println("Person " + (i+1) + ":");
+				System.out.println("First Name: "+transactionFirstName.value);
+				System.out.println("Last Name: "+transactionLastName.value);
+				System.out.println("Address: "+transactionAddress.value);
+				System.out.println("Country: "+transactionCountry.value);
+				System.out.println("Ranking: "+transactionRanking.value);
+				System.out.println("IBAN Number: "+transactionIbanNumber.value);
+				System.out.println("Account Status: "+transactionAccountStatus.value);
+				System.out.println("Account bic: "+transactionBic.value);
+			}
+			
+		
 			
 			
 			
