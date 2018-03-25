@@ -9,6 +9,7 @@ import java.sql.Statement;
 
 public class BankVCT {
 	
+	
 
 public static void main(String[] args) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		
@@ -16,14 +17,13 @@ public static void main(String[] args) throws SQLException, InstantiationExcepti
 		// Source DB
 		String url = "jdbc:mysql://sql11.freesqldatabase.com:3306/";
 		String dbName = "sql11226963";
-
 		String driver = "com.mysql.jdbc.Driver";
 		String userName = "sql11226963"; 
 		String password = "A6DJWbxVgN";
 
 		Class.forName(driver).newInstance();
 		    Connection conn = DriverManager.getConnection(url+dbName,userName,password);
-		    Statement stmt = conn.createStatement() ;
+		    Statement stmt = conn.createStatement();
 		    ResultSet rs;
 		    
 		    rs = stmt.executeQuery("SELECT * FROM Account");
