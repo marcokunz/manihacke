@@ -33,34 +33,24 @@ public static void main(String[] args) throws SQLException, InstantiationExcepti
 				// create new customer object and insert into database
 				TargetCustomer customer = new TargetCustomer(Integer.parseInt(rs.getString("CustomerID")), rs.getString("CustomerName"), rs.getString("CustomerName"), rs.getString("Town"), rs.getString("Country"), 1);
 				
-				
 				String Firma = "Firma";
 				if(rs.getString("TypeOfCustomer").equals(Firma)){
 					System.out.println("The customer below is a company");
 				}
 				
 				else{
-					DAO.insertCustomer(customer);
+					System.out.println(customer);
+					//DAO.insertCustomer(customer);
 				}
 				
 				
 
-				
 				//create new account object and insert into database
 				TargetAccount account = new TargetAccount(Integer.parseInt(rs.getString("CustomerID")),rs.getString("AccountNumber"), Double.parseDouble(rs.getString("Total")),"Type?");
-				DAO.insertAccount(account);
+				//DAO.insertAccount(account);
+				System.out.println(account);
 				
-				String CustomerID = rs.getString("CustomerID");
-				String CustomerName = rs.getString("CustomerName");
-				String StreetName = rs.getString("StreetName");
-				String ZIP = rs.getString("ZIP");
-				String Town = rs.getString("Town");
-				String Country = rs.getString("Country");
-				String TypeOfCustomer = rs.getString("TypeOfCustomer");
-				String AccountNumber = rs.getString("AccountNumber");
-				String Total = rs.getString("Total");
-				String Clearing = rs.getString("Clearing");
-				System.out.println("\t" + CustomerID + "\t" + CustomerName + "\t" + StreetName + "\t" + ZIP + "\t" + Town + "\t" + Country + "\t" + TypeOfCustomer + "\t" + AccountNumber + "\t" + Total + "\t" + Clearing);
+
 			}
 
 		

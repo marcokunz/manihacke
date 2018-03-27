@@ -23,7 +23,6 @@ public class DAO {
 		   
 	    try { PreparedStatement ps = conn.prepareStatement("TRUNCATE TABLE customer");
 	      
-
 	        int i = ps.executeUpdate();
 	      
 	        if(i == 1) {

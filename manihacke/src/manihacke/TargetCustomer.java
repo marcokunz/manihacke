@@ -8,7 +8,10 @@ public class TargetCustomer {
 	private String address;
 	private String countryCode;
 	private float status;
-
+	
+	
+	
+	//constructor for customers for targetTable
 	public TargetCustomer(int CID, String firstName, String lastName, String address, String countryCode, float status){
 		this.CID = CID;
 		this.firstName = firstName;
@@ -19,6 +22,7 @@ public class TargetCustomer {
 		
 		
 	}
+	
 	
 	public int getCID() {
 		return CID;
