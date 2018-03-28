@@ -81,18 +81,18 @@ public class ClientWebService {
 				TargetAccount account = new TargetAccount(0, transactionIbanNumber.value, transactionAccountStatus.value, "Transaction");
 				System.out.println(customer);
 				System.out.println(account);
-				try {
-					DAO.insertCustomer(customer);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				try {
-					DAO.insertAccount(account);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+//				try {
+//					DAO.insertCustomer(customer);
+//				} catch (SQLException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//				try {
+//					DAO.insertAccount(account);
+//				} catch (SQLException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
 				
 				
 			}

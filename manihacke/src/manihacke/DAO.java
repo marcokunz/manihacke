@@ -38,11 +38,7 @@ public class DAO {
 		
 	}
 		
-	
-	
-	
-	
-	
+
 	//customer table mit customer objekt befüllen
 	public static boolean insertCustomer(TargetCustomer customer) throws SQLException {
 	   Connection conn = DriverManager.getConnection(url+dbName,userName,password);
