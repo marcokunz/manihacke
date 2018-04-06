@@ -1,6 +1,7 @@
 package manihacke;
 
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 
 import javax.xml.rpc.holders.FloatWrapperHolder;
 import javax.xml.rpc.holders.IntegerWrapperHolder;
@@ -94,8 +95,15 @@ public class ClientWebService {
 	
 	
 	
-	
-	
+	// toString
+	public String toString() {
+		return "ClientWebService [tFirstName=" + tFirstName + ", tLastName=" + tLastName + ", tAddress=" + tAddress
+				+ ", tCountry=" + tCountry + ", tRanking=" + tRanking + ", tIBAN=" + tIBAN + ", tAccountStatus="
+				+ tAccountStatus + ", tBIC=" + tBIC + ", sFirstName=" + sFirstName + ", sLastName=" + sLastName
+				+ ", sStreet=" + sStreet + ", sZipTown=" + sZipTown + ", sInterestRate=" + sInterestRate
+				+ ", sAccountNumber=" + sAccountNumber + ", sAccountStatus=" + sAccountStatus + "]";
+	}
+
 	// getters and setters
 	public String gettFirstName() {
 		return tFirstName;
@@ -227,7 +235,7 @@ public class ClientWebService {
 	
 
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		
 		BankJD bank;
 		bank = new BankJDProxy();
@@ -244,24 +252,83 @@ public class ClientWebService {
 			LongWrapperHolder accountnumber = new LongWrapperHolder();
 			LongWrapperHolder accountstatus = new LongWrapperHolder();
 			
-			
+					
 			
 			
 			System.out.println("SAVINGS SAVINGS SAVINGS SAVINGS SAVINGS");
-			//print Savings
+			//create new objects and print 
 			String [] array1 = bank.listSavingsLastname();
 			for(int i = 0; i < array1.length;i++) {
+				
 				String name = array1[i];
 				bank.retrieveSavings("", name, fname, lname, street, zipTown, interestrate, accountnumber, accountstatus);
-				System.out.println("--------------------------------------");
-				System.out.println("Person " + (i+1) + ":");
-				System.out.println("First Name: "+fname.value);
-				System.out.println("Last Name: "+lname.value);
-				System.out.println("Street: "+street.value);
-				System.out.println("ZIPTown: "+zipTown.value);
-				System.out.println("InterestRate: "+interestrate.value);
-				System.out.println("Account Number: "+accountnumber.value);
-				System.out.println("Account Status: "+accountstatus.value);
+				ClientWebService BankJDEntry = new ClientWebService(fname.value, lname.value, street.value, zipTown.value, interestrate.value.toString(), accountnumber.value.toString(), accountstatus.value.toString());
+				System.out.println(BankJDEntry.toString());
+				
+				
+
+				//get parameters from BankJDSavings, manipulate them, and add to TargetCustomer
+
+				//create new customer and assign CID
+				TargetCustomer customer = new TargetCustomer();
+				customer.setCID(DAO.getNewCID());
+				
+				
+				// firstname, lastname, address, countrycode
+				customer.setFirstName(BankJDEntry.getsFirstName());
+				customer.setLastName(BankJDEntry.getsLastName());
+				customer.setAddress(BankJDEntry.getsStreet()+" "+BankJDEntry.getsZipTown());
+				customer.setCountryCode("CH");
+				
+				//Ranking
+				Float rankingSavings = Float.parseFloat(BankJDEntry.getsAccountStatus());
+				if(rankingSavings>1000000){
+					customer.setStatus("Gold");
+				}
+				else if(rankingSavings>500000){
+					customer.setStatus("Silver");
+				}
+				else if(rankingSavings<=500000){
+					customer.setStatus("Bronze");
+				}
+				
+				//DAO.insertCustomer(customer);
+				System.out.println(customer);
+				
+				
+				
+				//get parameters from BankJDSavings, manipulate them, and add to TargetAccount
+				
+				//create new customer and assign CID
+				TargetAccount account = new TargetAccount();
+				account.setCID(customer.getCID());
+				
+				//IBAN
+				ch.sic.ibantool.Main ibanclass = new ch.sic.ibantool.Main();
+				ch.sic.ibantool.RecordIban recordiban;
+				recordiban = new ch.sic.ibantool.RecordIban ();
+				
+				recordiban.BCPC = new StringBuffer("230");
+				recordiban.KoZe = new StringBuffer(BankJDEntry.getsAccountNumber());
+				recordiban = ibanclass.IBANConvert(recordiban);
+				
+				account.setIBAN(recordiban.Iban.toString());
+				
+				// Balance & Type
+				account.setAccountBalance(Double.parseDouble(BankJDEntry.sAccountStatus));
+				account.setTypeOfAccount("Savings");
+				
+				//DAO.insertAccount(account);
+				System.out.println(account);
+
+				
+				
+				
+				
+				
+				
+				
+
 			}
 			
 			System.out.println();
@@ -269,12 +336,8 @@ public class ClientWebService {
 			System.out.println("TRANSACTIONS TRANSACTIONS TRANSACTIONS TRANSACTIONS TRANSACTIONS");
 			
 			
-			
-			
-			
-			
-			
-			//Transactions
+
+			//Transactions Holders
 			StringHolder transactionFirstName = new StringHolder();
 			StringHolder transactionLastName = new StringHolder();
 			StringHolder transactionAddress = new StringHolder();
@@ -287,24 +350,73 @@ public class ClientWebService {
 			//print transactions & insert in DB
 			String [] array2 = bank.listeTransactionLastname();
 			for(int i = 0; i < array2.length;i++) {
+				
 				String name = array2[i];
 				bank.retrieveTransaction("", name, transactionFirstName, transactionLastName, transactionAddress, transactionCountry, transactionRanking, transactionIbanNumber, transactionAccountStatus, transactionBic );
-				TargetCustomer customer = new TargetCustomer(0, transactionFirstName.value, transactionLastName.value, transactionAddress.value, transactionCountry.value, "default");
-				TargetAccount account = new TargetAccount(0, transactionIbanNumber.value, transactionAccountStatus.value, "Transaction");
+				ClientWebService BankJDEntry = new ClientWebService(transactionFirstName.value, transactionLastName.value, transactionAddress.value, transactionCountry.value, transactionRanking.value.toString(), transactionIbanNumber.value, transactionAccountStatus.value.toString(), transactionBic.value);
+				System.out.println(BankJDEntry.toString());
+				
+				//get parameters from BankJDTransactions, manipulate them, and add to TargetCustomer
+				TargetCustomer customer = new TargetCustomer();
+				customer.setCID(DAO.getNewCID());
+				
+				
+				//firstname, lastname, address, countrycode
+				customer.setFirstName(BankJDEntry.gettFirstName());
+				customer.setLastName(BankJDEntry.gettLastName());
+				customer.setAddress(BankJDEntry.gettAddress());
+				customer.setCountryCode(BankJDEntry.gettCountry());
+			
+				
+				//Ranking
+				int rankingSavings = Integer.parseInt(BankJDEntry.gettRanking());
+				if(rankingSavings<3){
+					customer.setStatus("Gold");
+				}
+				else if(rankingSavings<5){
+					customer.setStatus("Silver");
+				}
+				else if(rankingSavings>=5){
+					customer.setStatus("Bronze");
+				}
+				
+				//DAO.insertCustomer(customer);
 				System.out.println(customer);
+				
+				
+				
+				
+				//get parameters from BankJDTransactions, manipulate them, and add to TargetAccount
+				
+				//create new customer and assign CID
+				TargetAccount account = new TargetAccount();
+				account.setCID(customer.getCID());
+				
+				//IBAN
+				ch.sic.ibantool.Main ibanclass = new ch.sic.ibantool.Main();
+				ch.sic.ibantool.RecordIban recordiban;
+				recordiban = new ch.sic.ibantool.RecordIban ();
+								
+				recordiban.BCPC = new StringBuffer("230");
+				System.out.println(BankJDEntry.gettIBAN().substring(12));
+				recordiban.KoZe = new StringBuffer(BankJDEntry.gettIBAN().substring(12,BankJDEntry.gettIBAN().length()));
+				recordiban = ibanclass.IBANConvert(recordiban);
+				System.out.println(recordiban.VFlag.toString());
+
+				
+				account.setIBAN(recordiban.Iban.toString());
+				
+				// Balance & Type
+				account.setAccountBalance(Double.parseDouble(BankJDEntry.gettAccountStatus()));
+				account.setTypeOfAccount("Transaction");
+				
 				System.out.println(account);
-//				try {
-//					DAO.insertCustomer(customer);
-//				} catch (SQLException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//				try {
-//					DAO.insertAccount(account);
-//				} catch (SQLException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
+				//DAO.insertAccount(account);
+				System.out.println();
+
+				
+				
+				
 				
 				
 			}
