@@ -6,6 +6,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class BankVCT {
@@ -213,19 +216,22 @@ public static void main(String[] args) throws SQLException, InstantiationExcepti
 				
 				//name
 				String name = vctEntry.getCustomerName();
-				String[] output = name.split(" ");
+				List<String> namesList = new ArrayList<>(Arrays.asList(name.split(" ")));
 				
+				if(namesList.get(0).equals("Dr.")){
+					namesList.remove(0);
+				}
 				
-				if(output.length<2){
-				tCustomer.setFirstName(output[0]);}
+				if(namesList.size()<2){
+				tCustomer.setFirstName(namesList.get(0));}
 				
-				else if(output.length<3){
-				tCustomer.setFirstName(output[0]);
-				tCustomer.setLastName(output[1]);}
+				else if(namesList.size()<3){
+				tCustomer.setFirstName(namesList.get(0));
+				tCustomer.setLastName(namesList.get(1));}
 				
-				else if(output.length<4){
-				tCustomer.setFirstName(output[0]);
-				tCustomer.setLastName(output[1]+" "+output[2]);}
+				else if(namesList.size()<4){
+				tCustomer.setFirstName(namesList.get(0));
+				tCustomer.setLastName(namesList.get(1)+" "+namesList.get(2));}
 				
 				
 				//print tCustomer
@@ -233,8 +239,9 @@ public static void main(String[] args) throws SQLException, InstantiationExcepti
 				
 			
 				//Insert Customer if not a company
-				if(vctEntry.getTypeOfCustomer().equals("Privat")){
+				if(vctEntry.getTypeOfCustomer().equals("Privat") || vctEntry.getTypeOfCustomer().equals("Private")){
 				//DAO.insertCustomer(tCustomer);
+				//DAO.emptyCustomerTable();
 					}
 				
 				
@@ -258,7 +265,7 @@ public static void main(String[] args) throws SQLException, InstantiationExcepti
 				tAccount.setTypeOfAccount("Transaction");
 				
 				//print tAccount
-				if(vctEntry.getTypeOfCustomer().equals("Privat")){
+				if(vctEntry.getTypeOfCustomer().equals("Privat") || vctEntry.getTypeOfCustomer().equals("Private")){
 				System.out.println(tAccount);
 				System.out.println();
 				}
@@ -267,8 +274,9 @@ public static void main(String[] args) throws SQLException, InstantiationExcepti
 				}
 				
 				//Insert Account if not a company
-				if(vctEntry.getTypeOfCustomer().equals("Privat")){
+				if(vctEntry.getTypeOfCustomer().equals("Privat") || vctEntry.getTypeOfCustomer().equals("Private")){
 					//DAO.insertAccount(tAccount);
+					//DAO.emptyAccountTable();
 					}
 				
 		

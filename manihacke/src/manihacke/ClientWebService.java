@@ -12,20 +12,230 @@ import ch.fhnw.www.wi.eai.bankjd.BankJDProxy;
 
 public class ClientWebService {
 	
+	//Klassenvariablen Transaction
+	private String tFirstName;
+	private String tLastName;
+	private String tAddress;
+	private String tCountry;
+	private String tRanking;
+	private String tIBAN;
+	private String tAccountStatus;
+	private String tBIC;
+	
+	//Klassenvariablen Savings
+	private String sFirstName;
+	private String sLastName;
+	private String sStreet;
+	private String sZipTown;
+	private String sInterestRate;
+	private String sAccountNumber;
+	private String sAccountStatus;
+	
+	
+	//constructor 
+	public ClientWebService(String tFirstName, String tLastName, String tAddress, String tCountry, String tRanking,
+			String tIBAN, String tAccountStatus, String tBIC, String sFirstName, String sLastName, String sStreet,
+			String sZipTown, String sInterestRate, String sAccountNumber, String sAccountStatus) {
+		super();
+		this.tFirstName = tFirstName;
+		this.tLastName = tLastName;
+		this.tAddress = tAddress;
+		this.tCountry = tCountry;
+		this.tRanking = tRanking;
+		this.tIBAN = tIBAN;
+		this.tAccountStatus = tAccountStatus;
+		this.tBIC = tBIC;
+		this.sFirstName = sFirstName;
+		this.sLastName = sLastName;
+		this.sStreet = sStreet;
+		this.sZipTown = sZipTown;
+		this.sInterestRate = sInterestRate;
+		this.sAccountNumber = sAccountNumber;
+		this.sAccountStatus = sAccountStatus;
+	}
+	
+	// empty constructor
+	public ClientWebService() {
+		super();
+	}
 
-	/**
-	 * @param args
-	 */
+	
+
+	// constructor for transaction
+	public ClientWebService(String tFirstName, String tLastName, String tAddress, String tCountry, String tRanking,
+			String tIBAN, String tAccountStatus, String tBIC) {
+		super();
+		this.tFirstName = tFirstName;
+		this.tLastName = tLastName;
+		this.tAddress = tAddress;
+		this.tCountry = tCountry;
+		this.tRanking = tRanking;
+		this.tIBAN = tIBAN;
+		this.tAccountStatus = tAccountStatus;
+		this.tBIC = tBIC;
+	}
+	
+	
+	
+
+	//constructor savings
+	public ClientWebService(String sFirstName, String sLastName, String sStreet, String sZipTown, String sInterestRate,
+			String sAccountNumber, String sAccountStatus) {
+		super();
+		this.sFirstName = sFirstName;
+		this.sLastName = sLastName;
+		this.sStreet = sStreet;
+		this.sZipTown = sZipTown;
+		this.sInterestRate = sInterestRate;
+		this.sAccountNumber = sAccountNumber;
+		this.sAccountStatus = sAccountStatus;
+	}
+
+	
+	
+	
+	
+	
+	// getters and setters
+	public String gettFirstName() {
+		return tFirstName;
+	}
+
+	public void settFirstName(String tFirstName) {
+		this.tFirstName = tFirstName;
+	}
+
+	public String gettLastName() {
+		return tLastName;
+	}
+
+	public void settLastName(String tLastName) {
+		this.tLastName = tLastName;
+	}
+
+	public String gettAddress() {
+		return tAddress;
+	}
+
+	public void settAddress(String tAddress) {
+		this.tAddress = tAddress;
+	}
+
+	public String gettCountry() {
+		return tCountry;
+	}
+
+	public void settCountry(String tCountry) {
+		this.tCountry = tCountry;
+	}
+
+	public String gettRanking() {
+		return tRanking;
+	}
+
+	public void settRanking(String tRanking) {
+		this.tRanking = tRanking;
+	}
+
+	public String gettIBAN() {
+		return tIBAN;
+	}
+
+	public void settIBAN(String tIBAN) {
+		this.tIBAN = tIBAN;
+	}
+
+	public String gettAccountStatus() {
+		return tAccountStatus;
+	}
+
+	public void settAccountStatus(String tAccountStatus) {
+		this.tAccountStatus = tAccountStatus;
+	}
+
+	public String gettBIC() {
+		return tBIC;
+	}
+
+	public void settBIC(String tBIC) {
+		this.tBIC = tBIC;
+	}
+
+	public String getsFirstName() {
+		return sFirstName;
+	}
+
+	public void setsFirstName(String sFirstName) {
+		this.sFirstName = sFirstName;
+	}
+
+	public String getsLastName() {
+		return sLastName;
+	}
+
+	public void setsLastName(String sLastName) {
+		this.sLastName = sLastName;
+	}
+
+	public String getsStreet() {
+		return sStreet;
+	}
+
+	public void setsStreet(String sStreet) {
+		this.sStreet = sStreet;
+	}
+
+	public String getsZipTown() {
+		return sZipTown;
+	}
+
+	public void setsZipTown(String sZipTown) {
+		this.sZipTown = sZipTown;
+	}
+
+	public String getsInterestRate() {
+		return sInterestRate;
+	}
+
+	public void setsInterestRate(String sInterestRate) {
+		this.sInterestRate = sInterestRate;
+	}
+
+	public String getsAccountNumber() {
+		return sAccountNumber;
+	}
+
+	public void setsAccountNumber(String sAccountNumber) {
+		this.sAccountNumber = sAccountNumber;
+	}
+
+	public String getsAccountStatus() {
+		return sAccountStatus;
+	}
+
+	public void setsAccountStatus(String sAccountStatus) {
+		this.sAccountStatus = sAccountStatus;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-	BankJD bank;
 		
+		BankJD bank;
 		bank = new BankJDProxy();
 		
 		try {
 			
 			
-			//Savings
+			//Savings Holders
 			StringHolder fname = new StringHolder();
 			StringHolder lname = new StringHolder();
 			StringHolder street = new StringHolder();
@@ -33,6 +243,9 @@ public class ClientWebService {
 			FloatWrapperHolder interestrate = new FloatWrapperHolder();
 			LongWrapperHolder accountnumber = new LongWrapperHolder();
 			LongWrapperHolder accountstatus = new LongWrapperHolder();
+			
+			
+			
 			
 			System.out.println("SAVINGS SAVINGS SAVINGS SAVINGS SAVINGS");
 			//print Savings
@@ -109,5 +322,7 @@ public class ClientWebService {
 		}
 
 	}
+
+	
 
 }
