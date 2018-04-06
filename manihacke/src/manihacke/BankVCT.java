@@ -233,7 +233,7 @@ public static void main(String[] args) throws SQLException, InstantiationExcepti
 				
 			
 				//Insert Customer if not a company
-				if(vctEntry.getTypeOfCustomer() != "Firma"){
+				if(vctEntry.getTypeOfCustomer().equals("Privat")){
 				//DAO.insertCustomer(tCustomer);
 					}
 				
@@ -258,12 +258,20 @@ public static void main(String[] args) throws SQLException, InstantiationExcepti
 				tAccount.setTypeOfAccount("Transaction");
 				
 				//print tAccount
+				if(vctEntry.getTypeOfCustomer().equals("Privat")){
 				System.out.println(tAccount);
 				System.out.println();
+				}
+				else{
+					System.out.println();
+				}
 				
+				//Insert Account if not a company
+				if(vctEntry.getTypeOfCustomer().equals("Privat")){
+					//DAO.insertAccount(tAccount);
+					}
 				
-				//DAO.insertAccount(tAccount);
-				
+		
 
 				
 			
