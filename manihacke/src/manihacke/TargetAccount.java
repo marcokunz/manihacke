@@ -17,7 +17,10 @@ public class TargetAccount {
 		this.typeOfAccount = typeOfAccount;
 	}
 
-
+	
+	public TargetAccount(){
+		
+	}
 
 
 	public int getCID() {

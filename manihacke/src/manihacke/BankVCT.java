@@ -168,18 +168,23 @@ public static void main(String[] args) throws SQLException, InstantiationExcepti
 			while (rs.next()) {
 				
 				// create new BankVCT object and print
-				BankVCT vctCustomer = new BankVCT(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9),rs.getString(10));
-				System.out.println(vctCustomer);
+				BankVCT vctEntry = new BankVCT(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9),rs.getString(10));
+				System.out.println(vctEntry);
 				
-				//create new, empty TargetCustomer 
+				//create new, empty TargetCustomer & set CID
 				TargetCustomer tCustomer = new TargetCustomer();
 				tCustomer.setCID(DAO.getNewCID());
+				
+				//create new, empty TargetAccount & set CID
+				TargetAccount tAccount = new TargetAccount();
+				tAccount.setCID(tCustomer.getCID());
+				
 				
 				//get parameters from BankVCT, manipulate them, and add to TargetCustomer
 				
 				
 				//Ranking
-				float totalVCT = Float.parseFloat(vctCustomer.getTotal());
+				float totalVCT = Float.parseFloat(vctEntry.getTotal());
 				if(totalVCT>1000000){
 					tCustomer.setStatus("Gold");
 				}
@@ -191,7 +196,7 @@ public static void main(String[] args) throws SQLException, InstantiationExcepti
 				}
 				
 				//state
-				String state = vctCustomer.getState();
+				String state = vctEntry.getState();
 				if(state.contains("Switzerland") ||state.contains("Schweiz")==true){
 					tCustomer.setCountryCode("CH");
 				}
@@ -203,11 +208,11 @@ public static void main(String[] args) throws SQLException, InstantiationExcepti
 				}
 				
 				//address
-				String address = vctCustomer.getStreetName()+","+vctCustomer.getZIP()+" "+vctCustomer.getTown();
+				String address = vctEntry.getStreetName()+","+vctEntry.getZIP()+" "+vctEntry.getTown();
 				tCustomer.setAddress(address);
 				
 				//name
-				String name = vctCustomer.getCustomerName();
+				String name = vctEntry.getCustomerName();
 				String[] output = name.split(" ");
 				
 				
@@ -225,16 +230,41 @@ public static void main(String[] args) throws SQLException, InstantiationExcepti
 				
 				//print tCustomer
 				System.out.println(tCustomer);
+				
+			
+				//Insert Customer if not a company
+				if(vctEntry.getTypeOfCustomer() != "Firma"){
+				//DAO.insertCustomer(tCustomer);
+					}
+				
+				
+				//get parameters from BankVCT, manipulate them, and add to TargetAccount
+				
+				//IBAN
+				ch.sic.ibantool.Main ibanclass = new ch.sic.ibantool.Main();
+				ch.sic.ibantool.RecordIban recordiban;
+				recordiban = new ch.sic.ibantool.RecordIban ();
+				
+				recordiban.BCPC = new StringBuffer("230");
+				recordiban.KoZe = new StringBuffer(vctEntry.accountNumber);
+				recordiban = ibanclass.IBANConvert(recordiban);
+				
+				tAccount.setIBAN(recordiban.Iban.toString());
+				
+				// Account balance
+				tAccount.setAccountBalance(Double.parseDouble(vctEntry.getTotal()));
+				
+				//Type of Account
+				tAccount.setTypeOfAccount("Transaction");
+				
+				//print tAccount
+				System.out.println(tAccount);
 				System.out.println();
 				
 				
+				//DAO.insertAccount(tAccount);
 				
-				
-				//Insert Customer if not a company
-				if(vctCustomer.getTypeOfCustomer() != "Firma"){
-				//DAO.insertCustomer(tCustomer);
-					
-					}
+
 				
 			
 
