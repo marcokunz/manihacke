@@ -171,10 +171,12 @@ public static void main(String[] args) throws SQLException, InstantiationExcepti
 				BankVCT vctCustomer = new BankVCT(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9),rs.getString(10));
 				System.out.println(vctCustomer);
 				
-				//create new empty TargetCustomer 
+				//create new, empty TargetCustomer 
 				TargetCustomer tCustomer = new TargetCustomer();
+				tCustomer.setCID(DAO.getNewCID());
 				
 				//get parameters from BankVCT, manipulate them, and add to TargetCustomer
+				
 				
 				//Ranking
 				float totalVCT = Float.parseFloat(vctCustomer.getTotal());

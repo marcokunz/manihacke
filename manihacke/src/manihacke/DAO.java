@@ -3,7 +3,9 @@ package manihacke;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 
 public class DAO {
@@ -117,6 +119,19 @@ public class DAO {
 	    return false;
 		
 	}
+	
+	//Höchste CID zurückgeben
+		public static int getNewCID() throws SQLException{
+			Connection conn = DriverManager.getConnection(url+dbName,userName,password);
+			Statement stmt = conn.createStatement();
+			
+			ResultSet resultset = stmt.executeQuery("SELECT MAX(CID) FROM customer");
+			resultset.next(); // exactly one result so allowed
+			int max = resultset.getInt(1); // use indexed retrieval since the column has no name
+		    return max+1;
+			
+		}
+	
 	
 	
 		
