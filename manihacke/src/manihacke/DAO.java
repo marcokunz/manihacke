@@ -51,7 +51,7 @@ public class DAO {
 	        ps.setString(3,customer.getLastName());
 	        ps.setString(4, customer.getAddress());
 	        ps.setString(5, customer.getCountryCode());
-	        ps.setFloat(6,customer.getStatus());
+	        ps.setString(6,customer.getStatus());
 
 	        int i = ps.executeUpdate();
 	      

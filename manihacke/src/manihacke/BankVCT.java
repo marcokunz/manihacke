@@ -6,11 +6,148 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Locale;
+
 
 public class BankVCT {
 	
+	private String customerID;
+	private String customerName;
+	private String streetName;
+	private String ZIP;
+	private String town;
+	private String state;
+	private String typeOfCustomer;
+	private String accountNumber;
+	private String total;
+	private String clearing;
 	
+	
+
+public BankVCT(String customerID, String customerName, String streetName, String ZIP, String town, String state,String typeOfCustomer, String accountNumber, String total, String clearing) {
+		super();
+		this.customerID = customerID;
+		this.customerName = customerName;
+		this.streetName = streetName;
+		this.ZIP = ZIP;
+		this.town = town;
+		this.state = state;
+		this.typeOfCustomer = typeOfCustomer;
+		this.accountNumber = accountNumber;
+		this.total = total;
+		this.clearing = clearing;
+	}
+
+
+
+
+//toString
+
+@Override
+public String toString() {
+	return "BankVCT [customerID=" + customerID + ", customerName=" + customerName + ", streetName=" + streetName
+			+ ", ZIP=" + ZIP + ", town=" + town + ", state=" + state + ", typeOfCustomer=" + typeOfCustomer
+			+ ", accountNumber=" + accountNumber + ", total=" + total + ", clearing=" + clearing + "]";
+}
+
+
+//getters & setters
+
+public String getCustomerID() {
+	return customerID;
+}
+
+public void setCustomerID(String customerID) {
+	this.customerID = customerID;
+}
+
+
+public String getCustomerName() {
+	return customerName;
+}
+
+public void setCustomerName(String customerName) {
+	this.customerName = customerName;
+}
+
+
+public String getStreetName() {
+	return streetName;
+}
+
+public void setStreetName(String streetName) {
+	this.streetName = streetName;
+}
+
+
+public String getZIP() {
+	return ZIP;
+}
+
+public void setZIP(String zIP) {
+	ZIP = zIP;
+}
+
+
+public String getTown() {
+	return town;
+}
+
+public void setTown(String town) {
+	this.town = town;
+}
+
+
+public String getState() {
+	return state;
+}
+
+public void setState(String state) {
+	this.state = state;
+}
+
+
+public String getTypeOfCustomer() {
+	return typeOfCustomer;
+}
+
+public void setTypeOfCustomer(String typeOfCustomer) {
+	this.typeOfCustomer = typeOfCustomer;
+}
+
+
+public String getAccountNumber() {
+	return accountNumber;
+}
+
+public void setAccountNumber(String accountNumber) {
+	this.accountNumber = accountNumber;
+}
+
+
+public String getTotal() {
+	return total;
+}
+
+public void setTotal(String total) {
+	this.total = total;
+}
+
+
+public String getClearing() {
+	return clearing;
+}
+
+public void setClearing(String clearing) {
+	this.clearing = clearing;
+}
+
+
+
+
+
+
+
+
 
 public static void main(String[] args) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		
@@ -28,30 +165,74 @@ public static void main(String[] args) throws SQLException, InstantiationExcepti
 		    ResultSet rs;
 		    
 		    rs = stmt.executeQuery("SELECT * FROM Account");
-		    System.out.println("CustomerID\tCustomerName\tStreetName\tZIP\tTown\tCountry\tTypeOfCustomer\tAccountNumber\tTotal\tClearing");
 			while (rs.next()) {
 				
-				// create new customer object and insert into database
-				TargetCustomer customer = new TargetCustomer(Integer.parseInt(rs.getString("CustomerID")), rs.getString("CustomerName"), rs.getString("CustomerName"), rs.getString("Town"), rs.getString("Country"), 1);
+				// create new BankVCT object and print
+				BankVCT vctCustomer = new BankVCT(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9),rs.getString(10));
+				System.out.println(vctCustomer);
 				
+				//create new empty TargetCustomer 
+				TargetCustomer tCustomer = new TargetCustomer();
 				
-				String Firma = "Firma";
-				if(rs.getString("TypeOfCustomer").equals(Firma)){
-					System.out.println("The customer below is a company");
+				//get parameters from BankVCT, manipulate them, and add to TargetCustomer
+				
+				//Ranking
+				float totalVCT = Float.parseFloat(vctCustomer.getTotal());
+				if(totalVCT>1000000){
+					tCustomer.setStatus("Gold");
+				}
+				else if(totalVCT>500000){
+					tCustomer.setStatus("Silver");
+				}
+				else if(totalVCT<=500000){
+					tCustomer.setStatus("Bronze");
 				}
 				
-				else{
-					System.out.println(customer);
-					//DAO.insertCustomer(customer);
+				//state
+				String state = vctCustomer.getState();
+				if(state.contains("Switzerland")==true){
+					tCustomer.setCountryCode("CH");
+				}
+				else if(state.contains("Germany") ||state.contains("Deutschland") ==true){
+					tCustomer.setCountryCode("DE");
+				}
+				else if(state.contains("The Netherlands")==true){
+					tCustomer.setCountryCode("NE");
 				}
 				
+				//address
+				String address = vctCustomer.getStreetName()+","+vctCustomer.getZIP()+" "+vctCustomer.getTown();
+				tCustomer.setAddress(address);
 				
-
-				//create new account object and insert into database
-				TargetAccount account = new TargetAccount(Integer.parseInt(rs.getString("CustomerID")),rs.getString("AccountNumber"), Double.parseDouble(rs.getString("Total")),"Type?");
-				//DAO.insertAccount(account);
-				System.out.println(account);
+				//name
+				String name = vctCustomer.getCustomerName();
+				String[] output = name.split(" ");
 				
+				
+				if(output.length<2){
+				tCustomer.setFirstName(output[0]);}
+				
+				else if(output.length<3){
+				tCustomer.setFirstName(output[0]);
+				tCustomer.setLastName(output[1]);}
+				
+				else if(output.length<4){
+				tCustomer.setFirstName(output[0]);
+				tCustomer.setLastName(output[1]+" "+output[2]);}
+				
+				
+				//print tCustomer
+				System.out.println(tCustomer);
+				System.out.println();
+				
+				
+				
+				//Insert Customer if not a company
+				if(vctCustomer.getTypeOfCustomer() != "Firma"){
+				//DAO.insertCustomer(tCustomer);
+					}
+				
+			
 
 			}
 

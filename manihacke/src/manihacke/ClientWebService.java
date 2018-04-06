@@ -1,7 +1,6 @@
 package manihacke;
 
 import java.rmi.RemoteException;
-import java.sql.SQLException;
 
 import javax.xml.rpc.holders.FloatWrapperHolder;
 import javax.xml.rpc.holders.IntegerWrapperHolder;
@@ -77,7 +76,7 @@ public class ClientWebService {
 			for(int i = 0; i < array2.length;i++) {
 				String name = array2[i];
 				bank.retrieveTransaction("", name, transactionFirstName, transactionLastName, transactionAddress, transactionCountry, transactionRanking, transactionIbanNumber, transactionAccountStatus, transactionBic );
-				TargetCustomer customer = new TargetCustomer(0, transactionFirstName.value, transactionLastName.value, transactionAddress.value, transactionCountry.value, 1);
+				TargetCustomer customer = new TargetCustomer(0, transactionFirstName.value, transactionLastName.value, transactionAddress.value, transactionCountry.value, "default");
 				TargetAccount account = new TargetAccount(0, transactionIbanNumber.value, transactionAccountStatus.value, "Transaction");
 				System.out.println(customer);
 				System.out.println(account);

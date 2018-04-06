@@ -7,12 +7,12 @@ public class TargetCustomer {
 	private String lastName;
 	private String address;
 	private String countryCode;
-	private float status;
+	private String status;
 	
 	
 	
 	//constructor for customers for targetTable
-	public TargetCustomer(int CID, String firstName, String lastName, String address, String countryCode, float status){
+	public TargetCustomer(int CID, String firstName, String lastName, String address, String countryCode, String status){
 		this.CID = CID;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -20,6 +20,10 @@ public class TargetCustomer {
 		this.countryCode = countryCode;
 		this.status = status;
 		
+		
+	}
+	
+	public TargetCustomer(){
 		
 	}
 	
@@ -64,11 +68,11 @@ public class TargetCustomer {
 		this.countryCode = countryCode;
 	}
 
-	public float getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(float status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 	
