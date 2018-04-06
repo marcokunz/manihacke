@@ -192,7 +192,7 @@ public static void main(String[] args) throws SQLException, InstantiationExcepti
 				
 				//state
 				String state = vctCustomer.getState();
-				if(state.contains("Switzerland")==true){
+				if(state.contains("Switzerland") ||state.contains("Schweiz")==true){
 					tCustomer.setCountryCode("CH");
 				}
 				else if(state.contains("Germany") ||state.contains("Deutschland") ==true){
@@ -229,9 +229,11 @@ public static void main(String[] args) throws SQLException, InstantiationExcepti
 				
 				
 				
+				
 				//Insert Customer if not a company
 				if(vctCustomer.getTypeOfCustomer() != "Firma"){
 				//DAO.insertCustomer(tCustomer);
+					
 					}
 				
 			

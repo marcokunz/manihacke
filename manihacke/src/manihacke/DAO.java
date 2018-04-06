@@ -120,7 +120,7 @@ public class DAO {
 		
 	}
 	
-	//Höchste CID zurückgeben
+	//Höchste CID + 1 zurückgeben
 		public static int getNewCID() throws SQLException{
 			Connection conn = DriverManager.getConnection(url+dbName,userName,password);
 			Statement stmt = conn.createStatement();
