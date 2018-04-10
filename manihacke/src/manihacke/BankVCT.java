@@ -209,6 +209,11 @@ public static void main(String[] args) throws SQLException, InstantiationExcepti
 				else if(state.contains("The Netherlands")==true){
 					tCustomer.setCountryCode("NE");
 				}
+				else {
+					tCustomer.setCountryCode("no country detected");
+				}
+				
+				
 				
 				//address
 				String address = vctEntry.getStreetName()+","+vctEntry.getZIP()+" "+vctEntry.getTown();
