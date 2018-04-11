@@ -50,6 +50,7 @@ public class DAO {
 	        PreparedStatement ps = conn.prepareStatement("INSERT INTO customer (CID, FIRSTNAME, LASTNAME, ADDRESS, COUNTRYCODE, STATUS) VALUES (?, ?, ?, ?, ?, ?)");
 	        ps.setInt(1, customer.getCID());
 	        ps.setString(2,customer.getFirstName());
+	        System.out.println("schreib");
 	        ps.setString(3,customer.getLastName());
 	        ps.setString(4, customer.getAddress());
 	        ps.setString(5, customer.getCountryCode());

@@ -235,7 +235,7 @@ public class ClientWebService {
 	
 
 	
-	public static void main(String[] args) throws SQLException {
+	public static void launch() throws SQLException {
 		
 		BankJD bank;
 		bank = new BankJDProxy();
@@ -291,8 +291,7 @@ public class ClientWebService {
 				else if(rankingSavings<=500000){
 					customer.setStatus("Bronze");
 				}
-				
-				//DAO.insertCustomer(customer);
+				DAO.insertCustomer(customer);
 				System.out.println(customer);
 				
 				
@@ -318,7 +317,7 @@ public class ClientWebService {
 				account.setAccountBalance(Double.parseDouble(BankJDEntry.sAccountStatus));
 				account.setTypeOfAccount("Savings");
 				
-				//DAO.insertAccount(account);
+				DAO.insertAccount(account);
 				System.out.println(account);
 
 				

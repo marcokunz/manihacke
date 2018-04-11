@@ -152,7 +152,7 @@ public void setClearing(String clearing) {
 
 
 
-public static void main(String[] args) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+public static void launch() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		
 	
 		// Source DB
@@ -245,8 +245,7 @@ public static void main(String[] args) throws SQLException, InstantiationExcepti
 			
 				//Insert Customer if not a company
 				if(vctEntry.getTypeOfCustomer().equals("Privat") || vctEntry.getTypeOfCustomer().equals("Private")){
-				//DAO.insertCustomer(tCustomer);
-				//DAO.emptyCustomerTable();
+				DAO.insertCustomer(tCustomer);
 					}
 				
 				
@@ -280,8 +279,7 @@ public static void main(String[] args) throws SQLException, InstantiationExcepti
 				
 				//Insert Account if not a company
 				if(vctEntry.getTypeOfCustomer().equals("Privat") || vctEntry.getTypeOfCustomer().equals("Private")){
-					//DAO.insertAccount(tAccount);
-					//DAO.emptyAccountTable();
+					DAO.insertAccount(tAccount);
 					}
 				
 		
