@@ -99,7 +99,7 @@ public class DAO {
 		for(int i = 0; i < data_firstname.size();i++) {
 			if(data_firstname.get(i).equals(customer.getFirstName()) && data_lastname.get(i).equals(customer.getLastName())) {
 				returnValue = false;
-				System.out.println(data_firstname.get(i) + " " + data_lastname.get(i) + "wurde �bersprungen da Duplikat!");
+				System.out.println(data_firstname.get(i) + " " + data_lastname.get(i) + "wurde �bersprungen da Duplikat!");
 				break;
 			}
 		}
@@ -169,6 +169,23 @@ public class DAO {
 		    return max+1;
 			
 		}
+		
+	//Umlaute in Strings ergänzen (ue --> ü usw.) - ausgenommen die ersten beiden Buchstaben würden ein Umlaut bilden 	
+		  public static String replaceUmlaut(String input) {
+
+				//split String in firstLetter and rest
+			    String firstLetter = input.substring(0,1);
+				String rest = input.substring(1);
+			 	
+			     //replace all lower Umlauts
+			     String output = rest.replace("ue", "ü")
+			                          .replace("oe", "ö")
+			                          .replace("ae", "ä")
+			                          .replace("ß", "ss");
+			     
+			     //concatenate Strings an return
+			     return firstLetter+output;
+			 }
 	
 	
 	
