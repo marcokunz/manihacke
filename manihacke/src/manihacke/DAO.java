@@ -177,7 +177,7 @@ public class DAO {
 			    String firstLetter = input.substring(0,1);
 				String rest = input.substring(1);
 			 	
-			     //replace all lower Umlauts
+			     //replace umlauts
 			     String output = rest.replace("ue", "ü")
 			                          .replace("oe", "ö")
 			                          .replace("ae", "ä")
