@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 
 public class DAO {
@@ -43,21 +44,20 @@ public class DAO {
 
 	//customer table mit customer objekt bef√ºllen
 	public static boolean insertCustomer(TargetCustomer customer) throws SQLException {
+	   if(duplicateCustomerCheck(customer)) {
 	   Connection conn = DriverManager.getConnection(url+dbName,userName,password);
-
+       PreparedStatement ps = conn.prepareStatement("INSERT INTO customer (CID, FIRSTNAME, LASTNAME, ADDRESS, COUNTRYCODE, STATUS) VALUES (?, ?, ?, ?, ?, ?)");
+       ps.setInt(1, customer.getCID());
+       ps.setString(2,customer.getFirstName());
+       ps.setString(3,customer.getLastName());
+       ps.setString(4, customer.getAddress());
+       ps.setString(5, customer.getCountryCode());
+       ps.setString(6,customer.getStatus());
 	   
 	    try {
-	        PreparedStatement ps = conn.prepareStatement("INSERT INTO customer (CID, FIRSTNAME, LASTNAME, ADDRESS, COUNTRYCODE, STATUS) VALUES (?, ?, ?, ?, ?, ?)");
-	        ps.setInt(1, customer.getCID());
-	        ps.setString(2,customer.getFirstName());
-	        System.out.println("schreib");
-	        ps.setString(3,customer.getLastName());
-	        ps.setString(4, customer.getAddress());
-	        ps.setString(5, customer.getCountryCode());
-	        ps.setString(6,customer.getStatus());
-
+	    	
 	        int i = ps.executeUpdate();
-	      
+	        
 	        if(i == 1) {
 	        return true;
 	      }
@@ -68,6 +68,43 @@ public class DAO {
 	        ex.printStackTrace();
 	    }
 	    return false;
+		}
+		else return false;
+	}
+	
+	//Funktion checkt, ob customer bereits in DB vorhanden ist (Vorname && Nachname)
+	private static boolean duplicateCustomerCheck(TargetCustomer customer) throws SQLException {
+		Connection conn = DriverManager.getConnection(url+dbName, userName, password);
+		PreparedStatement statementFirstname = conn.prepareStatement("SELECT FIRSTNAME FROM customer;");
+		ResultSet rsFirstname = statementFirstname.executeQuery();
+		PreparedStatement statementLastname = conn.prepareStatement("SELECT LASTNAME FROM customer;");
+		ResultSet rsLastname = statementLastname.executeQuery();
+		ArrayList data_firstname = new ArrayList();
+		ArrayList data_lastname = new ArrayList();
+        try {
+            for (int counter = 1; rsFirstname.next();counter++) {
+                    data_firstname.add(rsFirstname.getString(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            for (int counter = 1; rsLastname.next();counter++) {
+                    data_lastname.add(rsLastname.getString(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        boolean returnValue = true;
+		for(int i = 0; i < data_firstname.size();i++) {
+			if(data_firstname.get(i).equals(customer.getFirstName()) && data_lastname.get(i).equals(customer.getLastName())) {
+				returnValue = false;
+				System.out.println(data_firstname.get(i) + " " + data_lastname.get(i) + "wurde ¸bersprungen da Duplikat!");
+				break;
+			}
+		}
+		return returnValue;
+		
 	}
 	
 	
