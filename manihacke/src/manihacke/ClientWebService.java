@@ -304,7 +304,12 @@ public class ClientWebService {
 				
 				//create new customer and assign CID
 				TargetAccount account = new TargetAccount();
-				account.setCID(customer.getCID());
+				if(DAO.duplicateCustomerCheck(customer)==true){
+					int existingCID = DAO.getCIDbyName(customer.getFirstName(), customer.getLastName());
+					account.setCID(existingCID);
+				}
+				else{
+					account.setCID(customer.getCID());}
 				
 				//IBAN
 				ch.sic.ibantool.Main ibanclass = new ch.sic.ibantool.Main();
@@ -397,7 +402,12 @@ public class ClientWebService {
 				
 				//create new customer and assign CID
 				TargetAccount account = new TargetAccount();
-				account.setCID(customer.getCID());
+				if(DAO.duplicateCustomerCheck(customer)==true){
+					int existingCID = DAO.getCIDbyName(customer.getFirstName(), customer.getLastName());
+					account.setCID(existingCID);
+				}
+				else{
+					account.setCID(customer.getCID());}
 				
 				//IBAN
 				ch.sic.ibantool.Main ibanclass = new ch.sic.ibantool.Main();

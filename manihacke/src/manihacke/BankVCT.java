@@ -178,9 +178,9 @@ public static void launch() throws SQLException, InstantiationException, Illegal
 				TargetCustomer tCustomer = new TargetCustomer();
 				tCustomer.setCID(DAO.getNewCID());
 				
-				//create new, empty TargetAccount & set CID
-				TargetAccount tAccount = new TargetAccount();
-				tAccount.setCID(tCustomer.getCID());
+//				//create new, empty TargetAccount & set CID
+//				TargetAccount tAccount = new TargetAccount();
+//				tAccount.setCID(tCustomer.getCID());
 				
 				
 				//get parameters from BankVCT, manipulate them, and add to TargetCustomer
@@ -253,6 +253,15 @@ public static void launch() throws SQLException, InstantiationException, Illegal
 				
 				
 				//get parameters from BankVCT, manipulate them, and add to TargetAccount
+				
+				//create new, empty TargetAccount & set CID
+				TargetAccount tAccount = new TargetAccount();
+				if(DAO.duplicateCustomerCheck(tCustomer)==true){
+					int existingCID = DAO.getCIDbyName(tCustomer.getFirstName(), tCustomer.getLastName());
+					tAccount.setCID(existingCID);
+				}
+				else{
+				tAccount.setCID(tCustomer.getCID());}
 				
 				//IBAN
 				ch.sic.ibantool.Main ibanclass = new ch.sic.ibantool.Main();

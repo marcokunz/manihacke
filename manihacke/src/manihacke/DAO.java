@@ -73,7 +73,7 @@ public class DAO {
 	}
 	
 	//Funktion checkt, ob customer bereits in DB vorhanden ist (Vorname && Nachname)
-	private static boolean duplicateCustomerCheck(TargetCustomer customer) throws SQLException {
+	public static boolean duplicateCustomerCheck(TargetCustomer customer) throws SQLException {
 		Connection conn = DriverManager.getConnection(url+dbName, userName, password);
 		PreparedStatement statementFirstname = conn.prepareStatement("SELECT FIRSTNAME FROM customer;");
 		ResultSet rsFirstname = statementFirstname.executeQuery();
@@ -106,6 +106,25 @@ public class DAO {
 		return returnValue;
 		
 	}
+	
+	//findCIDbyName
+	public static int getCIDbyName(String firstName, String lastName) throws SQLException{
+		
+		Connection conn = DriverManager.getConnection(url+dbName, userName, password);
+		PreparedStatement stmt = conn.prepareStatement("SELECT CID FROM customer WHERE FIRSTNAME ='"+firstName+"' AND LASTNAME ='"+lastName+"';");
+		ResultSet rs = stmt.executeQuery();
+		if(rs.next()){
+		return rs.getInt(1);}
+		else{
+			return 9999;
+		}
+	
+    }
+
+		
+		
+	
+	
 	
 	
 	//account table mit account objekt befüllen
