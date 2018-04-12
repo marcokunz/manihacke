@@ -214,14 +214,11 @@ public class DAO {
 			     return firstLetter+output;}
 			  else{
 			  return input;}
-			 
-		  
-			  
-			  
+			
 			
 		  }
-	
-		
+		  
+		 
 }
 
 	
