@@ -238,6 +238,9 @@ public static void launch() throws SQLException, InstantiationException, Illegal
 				tCustomer.setFirstName(namesList.get(0));
 				tCustomer.setLastName(namesList.get(1)+" "+namesList.get(2));}
 				
+				//add umlauts where needed
+				//tCustomer.setFirstName(DAO.replaceUmlaut(tCustomer.getFirstName()));
+				tCustomer.setLastName(DAO.replaceUmlaut(tCustomer.getLastName()));
 				
 				//print tCustomer
 				System.out.println(tCustomer);

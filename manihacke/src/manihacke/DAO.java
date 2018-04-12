@@ -173,6 +173,7 @@ public class DAO {
 	//Umlaute in Strings ergänzen (ue --> ü usw.) - ausgenommen die ersten beiden Buchstaben würden ein Umlaut bilden 	
 		  public static String replaceUmlaut(String input) {
 
+			  if(input != null && !input.isEmpty()){ 
 				//split String in firstLetter and rest
 			    String firstLetter = input.substring(0,1);
 				String rest = input.substring(1);
@@ -184,7 +185,9 @@ public class DAO {
 			                          .replace("ß", "ss");
 			     
 			     //concatenate Strings an return
-			     return firstLetter+output;
+			     return firstLetter+output;}
+			  else{
+			  return input;}
 			 }
 	
 	

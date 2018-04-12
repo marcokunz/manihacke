@@ -280,6 +280,10 @@ public class ClientWebService {
 				customer.setAddress(BankJDEntry.getsStreet()+" "+BankJDEntry.getsZipTown());
 				customer.setCountryCode("CH");
 				
+				//add umlauts where needed
+				//customer.setFirstName(DAO.replaceUmlaut(customer.getFirstName()));
+				customer.setLastName(DAO.replaceUmlaut(customer.getLastName()));
+				
 				//Ranking
 				Float rankingSavings = Float.parseFloat(BankJDEntry.getsAccountStatus());
 				if(rankingSavings>1000000){
@@ -365,6 +369,10 @@ public class ClientWebService {
 				customer.setLastName(BankJDEntry.gettLastName());
 				customer.setAddress(BankJDEntry.gettAddress());
 				customer.setCountryCode(BankJDEntry.gettCountry());
+				
+				//add umlauts where needed
+				//customer.setFirstName(DAO.replaceUmlaut(customer.getFirstName()));
+				customer.setLastName(DAO.replaceUmlaut(customer.getLastName()));
 			
 				
 				//Ranking
@@ -410,7 +418,7 @@ public class ClientWebService {
 				account.setTypeOfAccount("Transaction");
 				
 				System.out.println(account);
-				//DAO.insertAccount(account);
+				DAO.insertAccount(account);
 				System.out.println();
 
 				
