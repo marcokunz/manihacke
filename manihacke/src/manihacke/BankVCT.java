@@ -220,18 +220,23 @@ public static void launch() throws SQLException, InstantiationException, Illegal
 				
 				
 				//address
-				String address = vctEntry.getStreetName()+","+vctEntry.getZIP()+" "+vctEntry.getTown();
+				String address = vctEntry.getStreetName()+", "+vctEntry.getZIP()+" "+vctEntry.getTown();
 				tCustomer.setAddress(address);
 				
 				//name
 				String name = vctEntry.getCustomerName();
 				List<String> namesList = new ArrayList<>(Arrays.asList(name.split(" ")));
+				for (int i = 0; i < namesList.size(); i++) {
+					if(!namesList.get(i).matches("van|von")){
+					namesList.set(i, namesList.get(i).substring(0, 1).toUpperCase() + namesList.get(i).substring(1).toLowerCase());}
+				}
+				
 				
 				if(namesList.get(0).equals("Dr.")){
 					namesList.remove(0);
 				}
 				
-				if(namesList.size()<2){
+				if(namesList.size()<2){	
 				tCustomer.setFirstName(namesList.get(0));}
 				
 				else if(namesList.size()<3){
