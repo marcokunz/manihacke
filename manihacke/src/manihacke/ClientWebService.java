@@ -255,7 +255,8 @@ public class ClientWebService {
 					
 			
 			
-			System.out.println("SAVINGS SAVINGS SAVINGS SAVINGS SAVINGS");
+			System.out.println("BankJD Savings");
+			System.out.println();
 			//create new objects and print 
 			String [] array1 = bank.listSavingsLastname();
 			for(int i = 0; i < array1.length;i++) {
@@ -263,15 +264,14 @@ public class ClientWebService {
 				String name = array1[i];
 				bank.retrieveSavings("", name, fname, lname, street, zipTown, interestrate, accountnumber, accountstatus);
 				ClientWebService BankJDEntry = new ClientWebService(fname.value, lname.value, street.value, zipTown.value, interestrate.value.toString(), accountnumber.value.toString(), accountstatus.value.toString());
-				System.out.println(BankJDEntry.toString());
+				System.out.println("Source Entry: "+BankJDEntry.toString());
 				
 				
 
 				//get parameters from BankJDSavings, manipulate them, and add to TargetCustomer
 
-				//create new customer and assign CID
+				//create new customer
 				TargetCustomer customer = new TargetCustomer();
-				customer.setCID(DAO.getNewCID());
 				
 				
 				// firstname, lastname, address, countrycode
@@ -295,21 +295,23 @@ public class ClientWebService {
 				else if(rankingSavings<=500000){
 					customer.setStatus("Bronze");
 				}
+				
+				//Assign CID and Insert customer if not duplicate
+				if(DAO.duplicateCustomerCheck(customer)==false){
+					customer.setCID(DAO.getCIDbyName(customer.getFirstName(), customer.getLastName()));
+				}
+				else{
+				customer.setCID(DAO.getNewCID());}
+				System.out.println("Inserted: "+customer);
 				DAO.insertCustomer(customer);
-				System.out.println(customer);
 				
 				
 				
 				//get parameters from BankJDSavings, manipulate them, and add to TargetAccount
 				
-				//create new customer and assign CID
+				//create new account and assign CID
 				TargetAccount account = new TargetAccount();
-				if(DAO.duplicateCustomerCheck(customer)==true){
-					int existingCID = DAO.getCIDbyName(customer.getFirstName(), customer.getLastName());
-					account.setCID(existingCID);
-				}
-				else{
-					account.setCID(customer.getCID());}
+				account.setCID(customer.getCID());
 				
 				//IBAN
 				ch.sic.ibantool.Main ibanclass = new ch.sic.ibantool.Main();
@@ -326,8 +328,11 @@ public class ClientWebService {
 				account.setAccountBalance(Double.parseDouble(BankJDEntry.sAccountStatus));
 				account.setTypeOfAccount("Savings");
 				
+				
+				
 				DAO.insertAccount(account);
-				System.out.println(account);
+				System.out.println("Inserted: "+account);
+				System.out.println();
 
 				
 				
@@ -341,7 +346,8 @@ public class ClientWebService {
 			
 			System.out.println();
 			System.out.println();
-			System.out.println("TRANSACTIONS TRANSACTIONS TRANSACTIONS TRANSACTIONS TRANSACTIONS");
+			System.out.println("BankJD Transactions");
+			System.out.println();
 			
 			
 
@@ -362,11 +368,10 @@ public class ClientWebService {
 				String name = array2[i];
 				bank.retrieveTransaction("", name, transactionFirstName, transactionLastName, transactionAddress, transactionCountry, transactionRanking, transactionIbanNumber, transactionAccountStatus, transactionBic );
 				ClientWebService BankJDEntry = new ClientWebService(transactionFirstName.value, transactionLastName.value, transactionAddress.value, transactionCountry.value, transactionRanking.value.toString(), transactionIbanNumber.value, transactionAccountStatus.value.toString(), transactionBic.value);
-				System.out.println(BankJDEntry.toString());
+				System.out.println("Source Entry: "+BankJDEntry.toString());
 				
 				//get parameters from BankJDTransactions, manipulate them, and add to TargetCustomer
 				TargetCustomer customer = new TargetCustomer();
-				customer.setCID(DAO.getNewCID());
 				
 				
 				//firstname, lastname, address, countrycode
@@ -392,8 +397,14 @@ public class ClientWebService {
 					customer.setStatus("Bronze");
 				}
 				
-				//DAO.insertCustomer(customer);
-				System.out.println(customer);
+				//Assign CID and Insert customer if not duplicate
+				if(DAO.duplicateCustomerCheck(customer)==false){
+					customer.setCID(DAO.getCIDbyName(customer.getFirstName(), customer.getLastName()));
+				}
+				else{
+				customer.setCID(DAO.getNewCID());}
+				System.out.println("Inserted: "+customer);
+				DAO.insertCustomer(customer);
 				
 				
 				
@@ -402,12 +413,7 @@ public class ClientWebService {
 				
 				//create new customer and assign CID
 				TargetAccount account = new TargetAccount();
-				if(DAO.duplicateCustomerCheck(customer)==true){
-					int existingCID = DAO.getCIDbyName(customer.getFirstName(), customer.getLastName());
-					account.setCID(existingCID);
-				}
-				else{
-					account.setCID(customer.getCID());}
+				account.setCID(customer.getCID());
 				
 				//IBAN
 				ch.sic.ibantool.Main ibanclass = new ch.sic.ibantool.Main();
@@ -415,11 +421,8 @@ public class ClientWebService {
 				recordiban = new ch.sic.ibantool.RecordIban ();
 								
 				recordiban.BCPC = new StringBuffer("230");
-				System.out.println(BankJDEntry.gettIBAN().substring(12));
 				recordiban.KoZe = new StringBuffer(BankJDEntry.gettIBAN().substring(12,BankJDEntry.gettIBAN().length()));
 				recordiban = ibanclass.IBANConvert(recordiban);
-				System.out.println(recordiban.VFlag.toString());
-
 				
 				account.setIBAN(recordiban.Iban.toString());
 				
@@ -427,8 +430,9 @@ public class ClientWebService {
 				account.setAccountBalance(Double.parseDouble(BankJDEntry.gettAccountStatus()));
 				account.setTypeOfAccount("Transaction");
 				
-				System.out.println(account);
+				
 				DAO.insertAccount(account);
+				System.out.println("Inserted: "+account);
 				System.out.println();
 
 				

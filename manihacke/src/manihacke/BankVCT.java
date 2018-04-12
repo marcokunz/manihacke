@@ -168,20 +168,24 @@ public static void launch() throws SQLException, InstantiationException, Illegal
 		    ResultSet rs;
 		    
 		    rs = stmt.executeQuery("SELECT * FROM Account");
+		    System.out.println("BANK VCT");
+		    System.out.println();
 			while (rs.next()) {
 				
 				// create new BankVCT object and print
 				BankVCT vctEntry = new BankVCT(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9),rs.getString(10));
-				System.out.println(vctEntry);
+				System.out.println("SourceEntry: "+vctEntry);
+				
+				
+				//only run code below here if type of customer is privat(e)
+				if(vctEntry.getTypeOfCustomer().equals("Privat") || vctEntry.getTypeOfCustomer().equals("Private")){
+
 				
 				//create new, empty TargetCustomer & set CID
 				TargetCustomer tCustomer = new TargetCustomer();
-				tCustomer.setCID(DAO.getNewCID());
+						
 				
-//				//create new, empty TargetAccount & set CID
-//				TargetAccount tAccount = new TargetAccount();
-//				tAccount.setCID(tCustomer.getCID());
-				
+
 				
 				//get parameters from BankVCT, manipulate them, and add to TargetCustomer
 				
@@ -242,26 +246,24 @@ public static void launch() throws SQLException, InstantiationException, Illegal
 				//tCustomer.setFirstName(DAO.replaceUmlaut(tCustomer.getFirstName()));
 				tCustomer.setLastName(DAO.replaceUmlaut(tCustomer.getLastName()));
 				
-				//print tCustomer
-				System.out.println(tCustomer);
 				
-			
-				//Insert Customer if not a company
-				if(vctEntry.getTypeOfCustomer().equals("Privat") || vctEntry.getTypeOfCustomer().equals("Private")){
+		
+				//Set CID and insert Customer 
+				tCustomer.setCID(DAO.getNewCID());
 				DAO.insertCustomer(tCustomer);
-					}
+				
+				//print tCustomer
+				System.out.println("Inserted: "+tCustomer);
+				
+				
+				
 				
 				
 				//get parameters from BankVCT, manipulate them, and add to TargetAccount
 				
 				//create new, empty TargetAccount & set CID
 				TargetAccount tAccount = new TargetAccount();
-				if(DAO.duplicateCustomerCheck(tCustomer)==true){
-					int existingCID = DAO.getCIDbyName(tCustomer.getFirstName(), tCustomer.getLastName());
-					tAccount.setCID(existingCID);
-				}
-				else{
-				tAccount.setCID(tCustomer.getCID());}
+				tAccount.setCID(tCustomer.getCID());
 				
 				//IBAN
 				ch.sic.ibantool.Main ibanclass = new ch.sic.ibantool.Main();
@@ -280,25 +282,23 @@ public static void launch() throws SQLException, InstantiationException, Illegal
 				//Type of Account
 				tAccount.setTypeOfAccount("Transaction");
 				
-				//print tAccount
-				if(vctEntry.getTypeOfCustomer().equals("Privat") || vctEntry.getTypeOfCustomer().equals("Private")){
-				System.out.println(tAccount);
-				System.out.println();
-				}
-				else{
-					System.out.println();
-				}
 				
-				//Insert Account if not a company
-				if(vctEntry.getTypeOfCustomer().equals("Privat") || vctEntry.getTypeOfCustomer().equals("Private")){
-					DAO.insertAccount(tAccount);
-					}
+				//Insert Account 
+				DAO.insertAccount(tAccount);
+				
+				//print tAccount
+				System.out.println("Inserted:" +tAccount);
+				System.out.println();
 				
 		
 
-				
+				}
+				else{
+					System.out.println("not inserted because entry is a company");
+					System.out.println();
+				}
 			
-
+				
 			}
 
 		

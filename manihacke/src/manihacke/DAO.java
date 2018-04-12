@@ -99,10 +99,17 @@ public class DAO {
 		for(int i = 0; i < data_firstname.size();i++) {
 			if(data_firstname.get(i).equals(customer.getFirstName()) && data_lastname.get(i).equals(customer.getLastName())) {
 				returnValue = false;
-				System.out.println(data_firstname.get(i) + " " + data_lastname.get(i) + "wurde �bersprungen da Duplikat!");
+				System.out.println("Customer Insert für "+data_firstname.get(i) + " " + data_lastname.get(i) + " wurde übersprungen da Duplikat!");
 				break;
 			}
 		}
+		statementFirstname.close();
+		statementLastname.close();
+		rsFirstname.close();
+		rsLastname.close();
+		conn.close();
+
+		
 		return returnValue;
 		
 	}
@@ -116,7 +123,7 @@ public class DAO {
 		if(rs.next()){
 		return rs.getInt(1);}
 		else{
-			return 9999;
+			return 404;
 		}
 	
     }
