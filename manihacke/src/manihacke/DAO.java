@@ -224,8 +224,10 @@ public class DAO {
 			  	Connection conn = DriverManager.getConnection(url+dbName, userName, password);
 				PreparedStatement stmt = conn.prepareStatement("SELECT * FROM customer");
 				ResultSet rs = stmt.executeQuery();
+				
 				try{
 				
+				//two-dimensional arraylist with customer table data	
 				ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
 
 					while(rs.next()){
@@ -236,36 +238,35 @@ public class DAO {
 						data.add(inner);
 						}
 				
-				
-							
-					for (ArrayList<String> i: data){
-						String firstName = i.get(0);
-						String lastName = i.get(1);
-						
-							for (ArrayList<String> p: data){
-								String lastName2 = p.get(1);
-								String firstName2 = p.get(0);
+							//iterate through arraylists and compare each row with each other row		
+							for (ArrayList<String> i: data){
+								String firstName = i.get(0);
+								String lastName = i.get(1);
 								
-								if(firstName.equals(lastName2) && lastName.equals(firstName2)){
-									System.out.println("possible duplicate: "+firstName+" "+lastName+", please check Database");
-								}
-							
-							}
-						
-							
+									for (ArrayList<String> p: data){
+										String lastName2 = p.get(1);
+										String firstName2 = p.get(0);
+										
+										if(firstName.equals(lastName2) && lastName.equals(firstName2)){
+											System.out.println("possible duplicate: "+firstName+" "+lastName+", please check Database");
+										}
+									
+									}		
 							}
 			  	}
 				
 			  	catch (SQLException sqle) { 
-			  	  System.out.println(sqle);   
+			  	  System.out.println(sqle);  
+			  	  
 			  	} 
-				finally{}
+				
+				finally{
 				conn.close();
 				stmt.close();
 				rs.close();
+				}
 				
 		  }
-	            //tbc
 				
 		
 }
