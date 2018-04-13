@@ -237,7 +237,7 @@ public class DAO {
 						}
 				
 					for (ArrayList<String> i: data){
-						System.out.println(i);
+						System.out.println(i.get(1));
 							
 							}
 			  	}
