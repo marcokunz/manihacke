@@ -221,46 +221,38 @@ public class DAO {
 		  
 		  
 		  public static void cleanUp() throws SQLException{
-			  	Connection conn = DriverManager.getConnection(url+dbName, userName, password);
+			  
+				try{
+				Connection conn = DriverManager.getConnection(url+dbName, userName, password);
+				PreparedStatement stmt = conn.prepareStatement("SELECT * FROM customer");
+				ResultSet rs = stmt.executeQuery();
+				ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
+
+					while(rs.next()){
+						ArrayList <String> inner = new ArrayList <String>();
+						inner.add(rs.getString(2));
+						inner.add(rs.getString(3));
+						inner.add(rs.getString(4));
+						data.add(inner);
+						}
 				
-			  	PreparedStatement statementFirstname = conn.prepareStatement("SELECT FIRSTNAME FROM customer;");
-				ResultSet rsFirstname = statementFirstname.executeQuery();
+					for (ArrayList<String> i: data){
+						System.out.println(i);
+							
+							}
+			  	}
 				
-				PreparedStatement statementLastname = conn.prepareStatement("SELECT LASTNAME FROM customer;");
-				ResultSet rsLastname = statementLastname.executeQuery();
-				
-				PreparedStatement statementAddress = conn.prepareStatement("SELECT ADDRESS FROM customer;");
-				ResultSet rsAddress = statementAddress.executeQuery();
-				
-				ArrayList<String> data_firstname = new ArrayList<String>();
-				ArrayList<String> data_lastname = new ArrayList<String>();
-				ArrayList<String> data_Address = new ArrayList<String>();
-				
-				for (int counter = 1; rsFirstname.next(); counter++) {
-	                    data_firstname.add(rsFirstname.getString(1));
-	            }
-	       
-	        
-	            for (int counter = 1; rsLastname.next(); counter++) {
-	                    data_lastname.add(rsLastname.getString(1));
-	            }
-	            
-	            
-	            for (int counter = 1; rsAddress.next(); counter++) {
-                    data_Address.add(rsAddress.getString(1));
-	            }
-	            
+			  	catch (SQLException sqle) { 
+			  	  System.out.println(sqle);   
+			  	} 
+		  }
 	            //tbc
 				
-				
-				
-			  
-			  
-			  
-		  }
+		
+}
 		  
 		 
-}
+
 
 	
 

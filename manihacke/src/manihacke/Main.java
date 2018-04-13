@@ -11,6 +11,7 @@ public class Main {
 		DAO.emptyCustomerTable();
 		BankVCT.launch();
 		ClientWebService.launch();
+		//DAO.cleanUp();
 
 
 		
