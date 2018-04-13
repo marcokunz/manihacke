@@ -242,13 +242,14 @@ public class DAO {
 							for (ArrayList<String> i: data){
 								String firstName = i.get(0);
 								String lastName = i.get(1);
+								String address =i.get(2);
 								
 									for (ArrayList<String> p: data){
 										String lastName2 = p.get(1);
 										String firstName2 = p.get(0);
 										
 										if(firstName.equals(lastName2) && lastName.equals(firstName2)){
-											System.out.println("possible duplicate: "+firstName+" "+lastName+", please check Database");
+											System.out.println("possible duplicate: "+firstName+" "+lastName+" "+address+", please check Database");
 										}
 									
 									}		
