@@ -236,8 +236,18 @@ public class DAO {
 						data.add(inner);
 						}
 				
+				String firstname = data.get(0).get(0);
+				String lastname = data.get(0).get(1);
+				String address = data.get(0).get(2);
+					
 					for (ArrayList<String> i: data){
-						System.out.println(i.get(1));
+						
+						if(i.get(1).equals(firstname)){
+						System.out.println("possible duplicate");	
+						}
+						else{
+							System.out.println("no match");
+						}
 							
 							}
 			  	}
