@@ -221,11 +221,11 @@ public class DAO {
 		  
 		  
 		  public static void cleanUp() throws SQLException{
-			  
-				try{
-				Connection conn = DriverManager.getConnection(url+dbName, userName, password);
+			  	Connection conn = DriverManager.getConnection(url+dbName, userName, password);
 				PreparedStatement stmt = conn.prepareStatement("SELECT * FROM customer");
 				ResultSet rs = stmt.executeQuery();
+				try{
+				
 				ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
 
 					while(rs.next()){
@@ -245,6 +245,11 @@ public class DAO {
 			  	catch (SQLException sqle) { 
 			  	  System.out.println(sqle);   
 			  	} 
+				finally{}
+				conn.close();
+				stmt.close();
+				rs.close();
+				
 		  }
 	            //tbc
 				
