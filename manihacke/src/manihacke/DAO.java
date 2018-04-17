@@ -245,12 +245,14 @@ public class DAO {
 								String address =i.get(2);
 								
 									for (ArrayList<String> p: data){
-										String lastName2 = p.get(1);
 										String firstName2 = p.get(0);
+										String lastName2 = p.get(1);
+										String address2 = p.get(2);
 										
 										if(firstName.equals(lastName2) && lastName.equals(firstName2)){
 											System.out.println("possible duplicate: "+firstName+" "+lastName+" "+address+", please check Database");
 										}
+										
 									
 									}		
 							}
