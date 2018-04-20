@@ -37,6 +37,9 @@ public class DAO {
 	    catch (SQLException ex) {
 	        ex.printStackTrace();
 	    }
+	    finally{
+	    	conn.close();
+	    }
 	    return false;
 		
 	}
@@ -67,9 +70,13 @@ public class DAO {
 	    catch (SQLException ex) {
 	        ex.printStackTrace();
 	    }
+	    finally{
+	    	conn.close();
+	    }
 	    return false;
 		}
 		else return false;
+	   
 	}
 	
 	//Funktion checkt, ob customer bereits in DB vorhanden ist (Vorname && Nachname)
@@ -122,10 +129,13 @@ public class DAO {
 		PreparedStatement stmt = conn.prepareStatement("SELECT CID FROM customer WHERE FIRSTNAME ='"+firstName+"' AND LASTNAME ='"+lastName+"';");
 		ResultSet rs = stmt.executeQuery();
 		if(rs.next()){
+			
 		return rs.getInt(1);}
 		else{
+		
 			return 404;
 		}
+		
 	
     }
 
@@ -159,6 +169,9 @@ public class DAO {
 	    catch (SQLException ex) {
 	        ex.printStackTrace();
 	    }
+	    finally{
+	    	conn.close();
+	    }
 	    return false;
 	}
 	
@@ -181,6 +194,10 @@ public class DAO {
 	    catch (SQLException ex) {
 	        ex.printStackTrace();
 	    }
+	    
+	    finally{
+	    	conn.close();
+	    }
 	    return false;
 		
 	}
@@ -193,7 +210,12 @@ public class DAO {
 			ResultSet resultset = stmt.executeQuery("SELECT MAX(CID) FROM customer");
 			resultset.next(); // exactly one result so allowed
 			int max = resultset.getInt(1); // use indexed retrieval since the column has no name
+			conn.close();
+			stmt.close();
+			resultset.close();
 		    return max+1;
+		    
+		    
 			
 		}
 		
@@ -232,6 +254,7 @@ public class DAO {
 
 					while(rs.next()){
 						ArrayList <String> inner = new ArrayList <String>();
+						inner.add(rs.getString(1));
 						inner.add(rs.getString(2));
 						inner.add(rs.getString(3));
 						inner.add(rs.getString(4));
@@ -240,19 +263,23 @@ public class DAO {
 				
 							//iterate through arraylists and compare each row with each other row		
 							for (ArrayList<String> i: data){
-								String firstName = i.get(0);
-								String lastName = i.get(1);
-								String address =i.get(2);
+								String CID = i.get(0);
+								String firstName = i.get(1);
+								String lastName = i.get(2);
+								String address =i.get(3);
 								
 									for (ArrayList<String> p: data){
-										String firstName2 = p.get(0);
-										String lastName2 = p.get(1);
-										String address2 = p.get(2);
+										String CID2 = p.get(0);
+										String firstName2 = p.get(1);
+										String lastName2 = p.get(2);
+										String address2 = p.get(3);
 										
-										if(firstName.equals(lastName2) && lastName.equals(firstName2)){
-											System.out.println("possible duplicate: "+firstName+" "+lastName+" "+address+", please check Database");
+										if(firstName.equals(lastName2) && lastName.equals(firstName2)&& !CID.equals(CID2)){
+											System.out.println("possible duplicate! CID "+CID+" seems similar to CID "+CID2+", please check Database");
 										}
-										
+										else if(address.equals(address2)&& !CID.equals(CID2)){
+											System.out.println("possible duplicate! CID "+CID+" seems similar to CID "+CID2+", please check Database");
+										}
 									
 									}		
 							}

@@ -243,6 +243,7 @@ public static void launch() throws SQLException, InstantiationException, Illegal
 				tCustomer.setFirstName(namesList.get(0));
 				tCustomer.setLastName(namesList.get(1));}
 				
+				
 				else if(namesList.size()<4){
 				tCustomer.setFirstName(namesList.get(0));
 				tCustomer.setLastName(namesList.get(1)+" "+namesList.get(2));}
@@ -276,6 +277,9 @@ public static void launch() throws SQLException, InstantiationException, Illegal
 				recordiban = new ch.sic.ibantool.RecordIban ();
 				
 				recordiban.BCPC = new StringBuffer("230");
+				if(vctEntry.accountNumber.length()<9){
+					vctEntry.accountNumber = "0"+vctEntry.accountNumber;
+				}
 				recordiban.KoZe = new StringBuffer(vctEntry.accountNumber);
 				recordiban = ibanclass.IBANConvert(recordiban);
 				

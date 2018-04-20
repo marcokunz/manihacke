@@ -277,7 +277,7 @@ public class ClientWebService {
 				// firstname, lastname, address, countrycode
 				customer.setFirstName(BankJDEntry.getsFirstName());
 				customer.setLastName(BankJDEntry.getsLastName());
-				customer.setAddress(BankJDEntry.getsStreet()+" "+BankJDEntry.getsZipTown());
+				customer.setAddress(BankJDEntry.getsStreet()+", "+BankJDEntry.getsZipTown());
 				customer.setCountryCode("CH");
 				
 				//add umlauts where needed
@@ -319,6 +319,9 @@ public class ClientWebService {
 				recordiban = new ch.sic.ibantool.RecordIban ();
 				
 				recordiban.BCPC = new StringBuffer("230");
+				if(BankJDEntry.getsAccountNumber().length()<9){
+					BankJDEntry.setsAccountNumber("0"+BankJDEntry.getsAccountNumber());
+				}
 				recordiban.KoZe = new StringBuffer(BankJDEntry.getsAccountNumber());
 				recordiban = ibanclass.IBANConvert(recordiban);
 				
@@ -421,7 +424,11 @@ public class ClientWebService {
 				recordiban = new ch.sic.ibantool.RecordIban ();
 								
 				recordiban.BCPC = new StringBuffer("230");
-				recordiban.KoZe = new StringBuffer(BankJDEntry.gettIBAN().substring(12,BankJDEntry.gettIBAN().length()));
+				int IBANlength = BankJDEntry.gettIBAN().length();
+				if(IBANlength==21){
+				recordiban.KoZe = new StringBuffer(BankJDEntry.gettIBAN().substring(12,BankJDEntry.gettIBAN().length()));}
+				else if(IBANlength==22){
+					recordiban.KoZe = new StringBuffer(BankJDEntry.gettIBAN().substring(13,BankJDEntry.gettIBAN().length()));}
 				recordiban = ibanclass.IBANConvert(recordiban);
 				
 				account.setIBAN(recordiban.Iban.toString());
