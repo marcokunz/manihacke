@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 
 public class DAO {
@@ -304,18 +306,17 @@ public class DAO {
 				ResultSet rs = stmt.executeQuery();
 				
 				//two-dimensional arrayList with account table data	
-				ArrayList<ArrayList<Integer>> data = new ArrayList<ArrayList<Integer>>();
+				ArrayList<Integer> data = new ArrayList<Integer>();
 
 					while(rs.next()){
-						ArrayList <Integer> inner = new ArrayList <Integer>();
-						inner.add(Integer.parseInt(rs.getString(1)));
-						data.add(inner);
+						data.add(Integer.parseInt(rs.getString(1)));
 						}
 					
 				stmt.close();
 				rs.close();
 				System.out.println("STATUSUPDATE:");
-				for(int i=1; i< data.size(); i++){
+				int max = Collections.max(data);
+				for(int i=1; i<= max; i++){
 					PreparedStatement stmt1 = conn.prepareStatement("SELECT SUM(ACCOUNTBALANCE) FROM account WHERE CID =" +i+";");
 					ResultSet rs1 = stmt1.executeQuery();
 					if(rs1.next()) {
@@ -323,7 +324,6 @@ public class DAO {
 					stmt1.close();
 					rs1.close();
 					String Ausgabe;
-					if(newAccountBalance != 0) {
 						if(newAccountBalance > 1000000) {
 							Ausgabe = "Gold";
 							PreparedStatement stmt2 = conn.prepareStatement("UPDATE customer SET STATUS = 'Gold' WHERE CID =" +i+";");
@@ -345,7 +345,7 @@ public class DAO {
 						
 					System.out.println("CID: "+i+" hat den Status: "+Ausgabe);
 					}
-					}
+					
 					
 					
 				}
