@@ -297,7 +297,44 @@ public class DAO {
 				}
 				
 		  }
+			
+		  public static void StatusChecker() throws SQLException {
+				Connection conn = DriverManager.getConnection(url+dbName, userName, password);
+				PreparedStatement stmt = conn.prepareStatement("SELECT * FROM account");
+				ResultSet rs = stmt.executeQuery();
 				
+				//two-dimensional arrayList with account table data	
+				ArrayList<ArrayList<Integer>> data = new ArrayList<ArrayList<Integer>>();
+
+					while(rs.next()){
+						ArrayList <Integer> inner = new ArrayList <Integer>();
+						inner.add(Integer.parseInt(rs.getString(1)));
+						data.add(inner);
+						}
+					
+				stmt.close();
+				rs.close();
+					
+				for(int i=0; i< data.size(); i++){
+					PreparedStatement stmt1 = conn.prepareStatement("SELECT SUM(ACCOUNTBALANCE) FROM account WHERE CID =" +i+";");
+					ResultSet rs1 = stmt.executeQuery();
+					int newAccountBalance = rs1.getInt(1);
+					stmt1.close();
+					rs1.close();
+					
+					System.out.println(i+" "+newAccountBalance);
+					
+					
+				}
+					
+				
+				
+				
+				
+			  
+			  
+			  
+		  }
 		
 }
 		  

@@ -12,6 +12,7 @@ public class Main {
 		BankVCT.launch();
 		ClientWebService.launch();
 		DAO.cleanUp();
+		DAO.StatusChecker();
 
 
 		
