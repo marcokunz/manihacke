@@ -314,20 +314,43 @@ public class DAO {
 					
 				stmt.close();
 				rs.close();
-					
-				for(int i=0; i< data.size(); i++){
+				System.out.println("STATUSUPDATE:");
+				for(int i=1; i< data.size(); i++){
 					PreparedStatement stmt1 = conn.prepareStatement("SELECT SUM(ACCOUNTBALANCE) FROM account WHERE CID =" +i+";");
-					ResultSet rs1 = stmt.executeQuery();
+					ResultSet rs1 = stmt1.executeQuery();
+					if(rs1.next()) {
 					int newAccountBalance = rs1.getInt(1);
 					stmt1.close();
 					rs1.close();
-					
-					System.out.println(i+" "+newAccountBalance);
+					String Ausgabe;
+					if(newAccountBalance != 0) {
+						if(newAccountBalance > 1000000) {
+							Ausgabe = "Gold";
+							PreparedStatement stmt2 = conn.prepareStatement("UPDATE customer SET STATUS = 'Gold' WHERE CID =" +i+";");
+							stmt2.execute();
+							stmt2.close();
+						}
+						else if (newAccountBalance > 500000) {
+							Ausgabe = "Silver";
+							PreparedStatement stmt2 = conn.prepareStatement("UPDATE customer SET STATUS = 'Silver' WHERE CID =" +i+";");
+							stmt2.execute();
+							stmt2.close();
+						}
+						else {
+							Ausgabe = "Bronze";
+							PreparedStatement stmt2 = conn.prepareStatement("UPDATE customer SET STATUS = 'Bronze' WHERE CID =" +i+";");
+							stmt2.execute();
+							stmt2.close();
+						}
+						
+					System.out.println("CID: "+i+" hat den Status: "+Ausgabe);
+					}
+					}
 					
 					
 				}
 					
-				
+
 				
 				
 				
