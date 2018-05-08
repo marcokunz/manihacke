@@ -230,9 +230,9 @@ public class DAO {
 				String rest = input.substring(1);
 			 	
 			     //replace umlauts
-			     String output = rest.replace("ue", "ü")
-			                          .replace("oe", "ö")
-			                          .replace("ae", "ä")
+			     String output = rest.replace("ü", "ue")
+			                          .replace("ö", "oe")
+			                          .replace("ä", "ae")
 			                          .replace("ß", "ss");
 			     
 			     //concatenate Strings an return
@@ -263,7 +263,7 @@ public class DAO {
 						data.add(inner);
 						}
 				
-							//iterate through arraylists and compare each row with each other row		
+							//iterate through arrayLists and compare each row with each other row		
 							for (ArrayList<String> i: data){
 								String CID = i.get(0);
 								String firstName = i.get(1);

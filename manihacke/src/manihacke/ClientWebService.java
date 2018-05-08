@@ -281,7 +281,7 @@ public class ClientWebService {
 				customer.setCountryCode("CH");
 				
 				//add umlauts where needed
-				//customer.setFirstName(DAO.replaceUmlaut(customer.getFirstName()));
+				customer.setFirstName(DAO.replaceUmlaut(customer.getFirstName()));
 				customer.setLastName(DAO.replaceUmlaut(customer.getLastName()));
 				
 				//Ranking
@@ -384,7 +384,7 @@ public class ClientWebService {
 				customer.setCountryCode(BankJDEntry.gettCountry());
 				
 				//add umlauts where needed
-				//customer.setFirstName(DAO.replaceUmlaut(customer.getFirstName()));
+				customer.setFirstName(DAO.replaceUmlaut(customer.getFirstName()));
 				customer.setLastName(DAO.replaceUmlaut(customer.getLastName()));
 			
 				
