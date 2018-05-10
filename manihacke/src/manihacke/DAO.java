@@ -230,10 +230,10 @@ public class DAO {
 				String rest = input.substring(1);
 			 	
 			     //replace umlauts
-			     String output = rest.replace("ü", "ue")
-			                          .replace("ö", "oe")
-			                          .replace("ä", "ae")
-			                          .replace("ß", "ss");
+			     String output = rest.replace("ue", "ü")
+			                          .replace("oe", "ö")
+			                          .replace("ae", "ä")
+			                          .replace("ss", "ß");
 			     
 			     //concatenate Strings an return
 			     return firstLetter+output;}
