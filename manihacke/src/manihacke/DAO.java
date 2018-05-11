@@ -258,33 +258,86 @@ public class DAO {
 						ArrayList <String> inner = new ArrayList <String>();
 						inner.add(rs.getString(1));
 						inner.add(rs.getString(2));
+						String s = (rs.getString(3).replaceAll("von", ""));
+						if(s.substring(0, 1).equals(" ")) {
+							inner.add(s.substring(1, s.length()));
+							System.out.println(inner.get(2));
+						}
+						else {
+							inner.add(s);
+						}
 						inner.add(rs.getString(3));
 						inner.add(rs.getString(4));
 						data.add(inner);
+						//System.out.println(inner.get(2));
 						}
 				
 							//iterate through arrayLists and compare each row with each other row		
-							for (ArrayList<String> i: data){
-								String CID = i.get(0);
-								String firstName = i.get(1);
-								String lastName = i.get(2);
-								String address =i.get(3);
+							for (int i = 0; i< data.size(); i++){
+								String CID = data.get(i).get(0);
+								String firstName = data.get(i).get(1);
+								String lastName = data.get(i).get(2);
+								String address = data.get(i).get(3);
 								
-									for (ArrayList<String> p: data){
-										String CID2 = p.get(0);
-										String firstName2 = p.get(1);
-										String lastName2 = p.get(2);
-										String address2 = p.get(3);
+									for (int y = i; y < data.size();y++){
+										String CID2 = data.get(y).get(0);
+										String firstName2 = data.get(y).get(1);
+										String lastName2 = data.get(y).get(2);
+										String address2 = data.get(y).get(3);
 										
+										
+										//update if firstname & lastname are mixed up
 										if(firstName.equals(lastName2) && lastName.equals(firstName2)&& !CID.equals(CID2)){
+											PreparedStatement stmt1 = conn.prepareStatement("DELETE FROM customer WHERE FIRSTNAME ='"+firstName2+"';");
+											stmt1.execute();
+											PreparedStatement stmt2 = conn.prepareStatement("UPDATE account SET CID = '"+CID+"' WHERE CID='"+CID2+"';");
+											stmt2.execute();
+											stmt1.close();
+											stmt2.close();	
 											System.out.println("possible duplicate! CID "+CID+" seems similar to CID "+CID2+", please check Database");
 										}
-										else if(address.equals(address2)&& !CID.equals(CID2)){
-											System.out.println("possible duplicate! CID "+CID+" seems similar to CID "+CID2+", please check Database");
+										
+										//update if first char of firstnames is the same && lastnames are the same
+										if(firstName.substring(0, 1).equals(firstName2.substring(0, 1)) && lastName.equals(lastName2) && !CID.equals(CID2)) {
+											
+											if(firstName.length()<firstName2.length()) {
+												PreparedStatement stmt3 = conn.prepareStatement("DELETE FROM customer WHERE CID ='"+CID+"';");
+												stmt3.execute();
+												PreparedStatement stmt4 = conn.prepareStatement("UPDATE account SET CID = '"+CID2+"' WHERE CID='"+CID+"';");
+												stmt4.execute();
+												}
+												
+											else {
+													PreparedStatement stmt3 = conn.prepareStatement("DELETE FROM customer WHERE CID ='"+CID2+"';");
+													stmt3.execute();
+													PreparedStatement stmt4 = conn.prepareStatement("UPDATE account SET CID = '"+CID+"' WHERE CID='"+CID2+"';");
+													stmt4.execute();
+													
+												}
+												
+											}
+										
+										if(firstName.substring(0, 1).equals(firstName2.substring(0, 1)) && lastName.contains(lastName2) && !lastName.equals(lastName2) && !CID.equals(CID2)){
+											PreparedStatement stmt5 = conn.prepareStatement("DELETE FROM customer WHERE CID ='"+CID+"';");
+											stmt5.execute();
+											PreparedStatement stmt6 = conn.prepareStatement("UPDATE account SET CID = '"+CID2+"' WHERE CID='"+CID+"';");
+											stmt6.execute();
+											PreparedStatement stmt7 = conn.prepareStatement("UPDATE customer SET COUNTRYCODE = 'DE' WHERE CID='"+CID2+"';");
+											stmt7.execute();
+											
 										}
 									
+										
+										
+											
+											
+										}
+										
+										
+										
+									
 									}		
-							}
+							
 			  	}
 				
 			  	catch (SQLException sqle) { 
